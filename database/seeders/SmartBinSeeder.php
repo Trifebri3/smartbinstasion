@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema;
 use App\Models\User;
 use App\Models\SmartBin;
 use App\Models\EducationMaterial;
@@ -39,118 +40,145 @@ class SmartBinSeeder extends Seeder
         // 3. Titik-Titik Lokasi SmartBin Terdekat (Area UIN SGD Bandung & Sekitarnya)
         $locations = [
             [
-                'uuid' => 'STATION-01',
+                'code' => 'STATION-01',
                 'name' => 'SmartBin Rektorat Utama',
                 'location_name' => 'Lobby Gedung Rektorat Kampus 1 UIN SGD Bandung',
                 'latitude' => -6.929824,
                 'longitude' => 107.718162,
                 'status' => 'active',
-                'capacity_organik' => 25.0,
-                'capacity_plastik' => 45.0,
-                'capacity_kertas' => 20.0,
-                'capacity_logam' => 70.0,
-                'last_sync_at' => now(),
+                'organik' => 25.0,
+                'plastik' => 45.0,
+                'kertas' => 20.0,
+                'logam' => 70.0,
             ],
             [
-                'uuid' => 'STATION-02',
+                'code' => 'STATION-02',
                 'name' => 'SmartBin Sains & Teknologi',
                 'location_name' => 'Plaza Fakultas Sains dan Teknologi (FST)',
                 'latitude' => -6.929210,
                 'longitude' => 107.717650,
                 'status' => 'active',
-                'capacity_organik' => 40.0,
-                'capacity_plastik' => 85.0,
-                'capacity_kertas' => 15.0,
-                'capacity_logam' => 30.0,
-                'last_sync_at' => now(),
+                'organik' => 15.0,
+                'plastik' => 60.0,
+                'kertas' => 35.0,
+                'logam' => 20.0,
             ],
             [
-                'uuid' => 'STATION-03',
-                'name' => 'SmartBin Perpustakaan Pusat',
-                'location_name' => 'Samping Pintu Masuk Gedung Perpustakaan Kampus 1',
-                'latitude' => -6.930450,
-                'longitude' => 107.718890,
+                'code' => 'STATION-03',
+                'name' => 'SmartBin Tarbiyah & Keguruan',
+                'location_name' => 'Koridor Fakultas Tarbiyah dan Keguruan (FTK)',
+                'latitude' => -6.930410,
+                'longitude' => 107.718910,
                 'status' => 'active',
-                'capacity_organik' => 15.0,
-                'capacity_plastik' => 50.0,
-                'capacity_kertas' => 60.0,
-                'capacity_logam' => 20.0,
-                'last_sync_at' => now(),
+                'organik' => 40.0,
+                'plastik' => 85.0,
+                'kertas' => 50.0,
+                'logam' => 30.0,
             ],
             [
-                'uuid' => 'STATION-04',
-                'name' => 'SmartBin Kampus 2 Cipadung',
-                'location_name' => 'Kantin Kampus 2 Jl. Soekarno-Hatta UIN SGD',
-                'latitude' => -6.933200,
-                'longitude' => 107.715400,
+                'code' => 'STATION-04',
+                'name' => 'SmartBin Masjid Ikomah',
+                'location_name' => 'Halaman Masjid Ikomah Kampus 1 UIN SGD',
+                'latitude' => -6.928750,
+                'longitude' => 107.719220,
                 'status' => 'active',
-                'capacity_organik' => 35.0,
-                'capacity_plastik' => 40.0,
-                'capacity_kertas' => 10.0,
-                'capacity_logam' => 15.0,
-                'last_sync_at' => now(),
-            ],
+                'organik' => 10.0,
+                'plastik' => 30.0,
+                'kertas' => 15.0,
+                'logam' => 10.0,
+            ]
         ];
 
+        $hasStationCode = Schema::hasColumn('smart_bins', 'station_code');
         foreach ($locations as $loc) {
-            SmartBin::updateOrCreate(
-                ['uuid' => $loc['uuid']],
-                $loc
-            );
+            if ($hasStationCode) {
+                SmartBin::updateOrCreate(
+                    ['station_code' => $loc['code']],
+                    [
+                        'name' => $loc['name'],
+                        'location_name' => $loc['location_name'],
+                        'latitude' => $loc['latitude'],
+                        'longitude' => $loc['longitude'],
+                        'status' => $loc['status'],
+                        'capacity_organic' => $loc['organik'],
+                        'capacity_plastic' => $loc['plastik'],
+                        'capacity_paper' => $loc['kertas'],
+                        'capacity_metal' => $loc['logam'],
+                        'is_online' => true,
+                        'last_ping_at' => now(),
+                    ]
+                );
+            } else {
+                SmartBin::updateOrCreate(
+                    ['uuid' => $loc['code']],
+                    [
+                        'name' => $loc['name'],
+                        'location_name' => $loc['location_name'],
+                        'latitude' => $loc['latitude'],
+                        'longitude' => $loc['longitude'],
+                        'status' => $loc['status'],
+                        'capacity_organik' => $loc['organik'],
+                        'capacity_plastik' => $loc['plastik'],
+                        'capacity_kertas' => $loc['kertas'],
+                        'capacity_logam' => $loc['logam'],
+                        'last_sync_at' => now(),
+                    ]
+                );
+            }
         }
 
-        // 4. Modul Edukasi
-        $educations = [
+        // 4. Materi Edukasi Ekoteologi & Pemilahan
+        $materials = [
             [
                 'category' => 'organik',
-                'title' => 'Sampah Organik (Sisa Makanan & Dedaunan)',
-                'color_badge' => 'emerald',
+                'title' => 'Berkah Makanan & Kompos Tanah',
+                'color_badge' => '#10B981',
                 'icon' => 'leaf',
-                'summary' => 'Sampah yang mudah terurai hayati berasal dari sisa sayur, buah, nasi, dan dedaunan.',
-                'sorting_guide' => 'Pisahkan dari kemasan plastik. Masukkan ke kompartemen hijau untuk diolah menjadi kompos.',
-                'recycling_impact' => '1 kg sampah organik menghasilkan pupuk kompos alami dan mengurangi gas metana di TPA.',
-                'eco_theology_quote' => 'Dan Dia-lah yang menjadikan tanaman-tanaman yang merambat dan yang tidak merambat... Makanlah dari buahnya bila dia berbuah dan tunaikanlah haknya di hari memetik hasilnya.',
-                'eco_theology_ref' => 'QS. Al-An\'am: 141',
+                'summary' => 'Sampah organik seperti sisa makanan dan daun adalah nutrisi fitrah bumi. Memilahnya mencegah produksi gas metana berbahaya di TPA dan menghasilkan pupuk kompos subur.',
+                'sorting_guide' => 'Wadah Hijau: Sisa sayuran, nasi, kulit buah, daun kering, ampas kopi/teh. Jangan masukkan plastik kemasan atau styrofoam.',
+                'recycling_impact' => 'Dapat diolah menjadi pupuk kompos berkualitas tinggi dan pakan budidaya maggot BSF untuk ketahanan pangan kampus.',
+                'eco_theology_quote' => 'Dan Dia-lah yang menurunkan air hujan dari langit, lalu Kami tumbuhkan dengan air itu segala macam tumbuh-tumbuhan.',
+                'eco_theology_ref' => 'QS. Al-An\'am: 99',
             ],
             [
                 'category' => 'plastik',
-                'title' => 'Sampah Anorganik: Plastik',
-                'color_badge' => 'sky',
-                'icon' => 'bottle',
-                'summary' => 'Kemasan botol PET, gelas air mineral, kantong kresek, dan wadah polimer sintetis.',
-                'sorting_guide' => 'Kosongkan sisa cairan, remas botol untuk menghemat ruang, masukkan ke kompartemen biru.',
-                'recycling_impact' => 'Mendaur ulang 1 ton botol plastik menghemat 3,8 barel minyak bumi dan mencegah mikroplastik di lautan.',
-                'eco_theology_quote' => 'Telah tampak kerusakan di darat dan di laut disebabkan karena perbuatan tangan manusia, supaya Allah merasakan kepada mereka sebagian dari (akibat) perbuatan mereka, agar mereka kembali (ke jalan yang benar).',
+                'title' => 'Menjaga Mizan (Keseimbangan) dari Polusi Plastik',
+                'color_badge' => '#F59E0B',
+                'icon' => 'recycle',
+                'summary' => 'Plastik membutuhkan ratusan tahun untuk terurai dan terfragmentasi menjadi mikroplastik beracun. Pemilahan plastik mendukung ekonomi sirkular dan perlindungan ekosistem laut.',
+                'sorting_guide' => 'Wadah Kuning/Orange: Botol PET, gelas air mineral, tutup botol, kantong kresek bersih. Kosongkan sisa cairan terlebih dahulu.',
+                'recycling_impact' => 'Didaur ulang menjadi biji plastik rPET, benang poliester, dakron tekstil, dan papan paving ramah lingkungan.',
+                'eco_theology_quote' => 'Telah tampak kerusakan di darat dan di laut disebabkan karena perbuatan tangan manusia.',
                 'eco_theology_ref' => 'QS. Ar-Rum: 41',
             ],
             [
                 'category' => 'kertas',
-                'title' => 'Sampah Anorganik: Kertas & Karton',
-                'color_badge' => 'amber',
-                'icon' => 'newspaper',
-                'summary' => 'Kardus, kertas HVS, amplop, koran, majalah, dan kotak karton kering.',
-                'sorting_guide' => 'Pastikan kertas tidak basah atau berminyak, lipat rata, masukkan ke kompartemen kuning.',
-                'recycling_impact' => 'Setiap 1 ton kertas yang didaur ulang menyelamatkan 17 batang pohon dewasa dan 26.500 liter air bersih.',
-                'eco_theology_quote' => 'Kebersihan dan kesucian itu adalah separuh dari keimanan.',
-                'eco_theology_ref' => 'HR. Muslim no. 223',
+                'title' => 'Menghargai Pohon & Keberlanjutan Pohon Kehidupan',
+                'color_badge' => '#3B82F6',
+                'icon' => 'book-open',
+                'summary' => 'Setiap ton kertas daur ulang menyelamatkan sekitar 17 pohon dewasa dan 26.000 liter air bersih. Menghindari pemborosan kertas adalah wujud syukur nikmat ilmu dan alam.',
+                'sorting_guide' => 'Wadah Biru: Kardus, kertas HVS, koran, majalah, karton telur. Pastikan tidak terkena minyak atau air sisa makanan.',
+                'recycling_impact' => 'Dilebur menjadi bubur kertas (pulp) untuk karton kemasan baru, buku tulis ramah lingkungan, dan kantong belanja kertas.',
+                'eco_theology_quote' => 'Dan pohon-pohonan dan tumbuh-tumbuhan kedua-duanya tunduk kepada-Nya.',
+                'eco_theology_ref' => 'QS. Ar-Rahman: 6',
             ],
             [
-                'category' => 'logam_kaca',
-                'title' => 'Sampah Anorganik: Logam & Kaca',
-                'color_badge' => 'rose',
-                'icon' => 'cube',
-                'summary' => 'Kaleng minuman aluminium, kaleng biskuit, botol kaca, pecahan piring, dan besi.',
-                'sorting_guide' => 'Bilas bersih dari sisa makanan. Masukkan hati-hati ke kompartemen merah/rose.',
-                'recycling_impact' => 'Aluminium dapat didaur ulang 100% tanpa batas tanpa mengurangi kualitasnya, menghemat 95% energi.',
-                'eco_theology_quote' => 'Dan janganlah kamu berbuat kerusakan di muka bumi setelah (Allah) memperbaikinya...',
-                'eco_theology_ref' => 'QS. Al-A\'raf: 56',
+                'category' => 'logam',
+                'title' => 'Kekuatan Besi & Daur Ulang Mineral Logam',
+                'color_badge' => '#EF4444',
+                'icon' => 'sparkles',
+                'summary' => 'Logam dan kaca dapat didaur ulang tanpa batas tanpa kehilangan kualitas fisiknya. Menghemat hingga 95% energi dibanding menambang bijih logam mentah baru.',
+                'sorting_guide' => 'Wadah Abu-abu/Merah: Kaleng minuman aluminium, kaleng susu, sendok logam rusak, botol kaca sirup/selai.',
+                'recycling_impact' => 'Dilebur kembali di pabrik peleburan aluminium/baja menjadi produk logam baru dengan jejak karbon sangat rendah.',
+                'eco_theology_quote' => 'Dan Kami menciptakan besi yang padanya terdapat kekuatan yang hebat dan berbagai manfaat bagi manusia.',
+                'eco_theology_ref' => 'QS. Al-Hadid: 25',
             ],
         ];
 
-        foreach ($educations as $edu) {
+        foreach ($materials as $mat) {
             EducationMaterial::updateOrCreate(
-                ['category' => $edu['category']],
-                $edu
+                ['category' => $mat['category']],
+                $mat
             );
         }
     }

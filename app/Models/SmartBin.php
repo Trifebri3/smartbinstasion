@@ -9,29 +9,52 @@ class SmartBin extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'uuid',
-        'name',
-        'location_name',
-        'latitude',
-        'longitude',
-        'capacity_organik',
-        'capacity_plastik',
-        'capacity_kertas',
-        'capacity_logam',
-        'status',
-        'last_sync_at',
-    ];
+    protected $guarded = [];
 
     protected $casts = [
         'latitude' => 'float',
         'longitude' => 'float',
         'last_sync_at' => 'datetime',
+        'last_ping_at' => 'datetime',
         'capacity_organik' => 'float',
         'capacity_plastik' => 'float',
         'capacity_kertas' => 'float',
         'capacity_logam' => 'float',
+        'capacity_organic' => 'float',
+        'capacity_plastic' => 'float',
+        'capacity_paper' => 'float',
+        'capacity_metal' => 'float',
     ];
+
+    public function getStationCodeAttribute()
+    {
+        return $this->attributes['station_code'] ?? $this->attributes['uuid'] ?? '';
+    }
+
+    public function getUuidAttribute()
+    {
+        return $this->attributes['uuid'] ?? $this->attributes['station_code'] ?? '';
+    }
+
+    public function getCapacityOrganikAttribute()
+    {
+        return $this->attributes['capacity_organik'] ?? $this->attributes['capacity_organic'] ?? 0;
+    }
+
+    public function getCapacityPlastikAttribute()
+    {
+        return $this->attributes['capacity_plastik'] ?? $this->attributes['capacity_plastic'] ?? 0;
+    }
+
+    public function getCapacityKertasAttribute()
+    {
+        return $this->attributes['capacity_kertas'] ?? $this->attributes['capacity_paper'] ?? 0;
+    }
+
+    public function getCapacityLogamAttribute()
+    {
+        return $this->attributes['capacity_logam'] ?? $this->attributes['capacity_metal'] ?? 0;
+    }
 
     /**
      * Hitung jarak dari koordinat pengguna dalam kilometer (rumus Haversine).

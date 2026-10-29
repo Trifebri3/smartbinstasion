@@ -5,37 +5,56 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Schema;
 use App\Models\User;
 use App\Models\SmartBin;
 use App\Models\WasteDeposit;
-use App\Models\SensorLog;
 
 class StationApiController extends Controller
 {
     /**
-     * Poin standar per jenis sampah (Gamifikasi).
+     * Konfigurasi Poin Gamifikasi per Kategori Sampah
      */
-    private const POINT_RULES = [
-        'organik' => 30,
-        'plastik' => 50,
-        'kertas' => 40,
-        'logam_kaca' => 60,
+    const POINT_RULES = [
+        'organik' => 50,       // Sampah Organik (Mudah Terurai / Kompos)
+        'plastik' => 100,      // Sampah Plastik (Sulit Terurai / Daur Ulang Tinggi)
+        'kertas'  => 75,       // Sampah Kertas (Ekonomi Sirkular)
+        'logam'   => 120,      // Sampah Logam / Kaleng
+        'logam_kaca' => 120,   // Kompatibilitas model
+        'baterai' => 150,      // Limbah B3 / Berbahaya
     ];
 
     /**
-     * Label manusiawi untuk kategori sampah.
+     * Label Kategori
      */
-    private const CATEGORY_LABELS = [
-        'organik' => 'Sampah Organik / Basah',
+    const CATEGORY_LABELS = [
+        'organik' => 'Sampah Organik',
         'plastik' => 'Sampah Plastik',
         'kertas' => 'Sampah Kertas & Karton',
+        'logam' => 'Sampah Logam & Kaca',
         'logam_kaca' => 'Sampah Logam & Kaca',
     ];
 
     /**
+     * Helper cari SmartBin berdasarkan kode stasiun
+     */
+    private function findSmartBin($stationCode)
+    {
+        if (Schema::hasColumn('smart_bins', 'station_code')) {
+            $bin = SmartBin::where('station_code', $stationCode)->first();
+            if ($bin) return $bin;
+        }
+        if (Schema::hasColumn('smart_bins', 'uuid')) {
+            $bin = SmartBin::where('uuid', $stationCode)->first();
+            if ($bin) return $bin;
+        }
+        return SmartBin::first();
+    }
+
+    /**
      * 1. Verifikasi QR Code dari Kamera SmartBin Raspberry Pi.
      * POST /api/station/verify-qr
-     * Payload: { "qr_token": "SB-USR-XXXX" }
+     * Payload: { "qr_token": "SB-USR-XXXX", "station_code": "STATION-01" }
      */
     public function verifyQr(Request $request)
     {
@@ -63,10 +82,10 @@ class StationApiController extends Controller
                 'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
-                'role' => $user->role,
-                'points' => (int) $user->points,
+                'role' => $user->role ?? 'user',
+                'points' => (int) ($user->points ?? 0),
                 'qr_token' => $user->qr_code_token,
-                'avatar' => $user->avatar ?? 'https://ui-avatars.com/api/?name=' . urlencode($user->name),
+                'avatar' => $user->avatar ?? "https://ui-avatars.com/api/?name=" . urlencode($user->name),
             ],
             'greeting' => "Halo, {$user->name}! Selamat Datang di SmartBin.",
             'instruction' => "Sesi Anda aktif. Silakan masukkan sampah Anda ke dalam wadah pemindaian."
@@ -105,7 +124,7 @@ class StationApiController extends Controller
             'organik' => 'BIN 1',
             'plastik' => 'BIN 2',
             'kertas' => 'BIN 3',
-            'logam_kaca' => 'BIN 4',
+            'logam', 'logam_kaca' => 'BIN 4',
             default => 'BIN 1'
         };
 
@@ -114,7 +133,7 @@ class StationApiController extends Controller
 
         if ($user) {
             // Temukan ID SmartBin berdasarkan station_code
-            $bin = SmartBin::where('uuid', $stationCode)->first();
+            $bin = $this->findSmartBin($stationCode);
             $binId = $bin ? $bin->id : 1;
 
             // Catat transaksi setoran
@@ -128,7 +147,7 @@ class StationApiController extends Controller
                     'organik' => 0.35,
                     'plastik' => 0.15,
                     'kertas' => 0.20,
-                    'logam_kaca' => 0.40,
+                    'logam', 'logam_kaca' => 0.40,
                     default => 0.25
                 },
                 'source' => 'station_camera',
@@ -166,15 +185,26 @@ class StationApiController extends Controller
         $s4 = $request->input('sensor4');
 
         // Update database titik SmartBin
-        $bin = SmartBin::where('uuid', $stationCode)->first();
+        $bin = $this->findSmartBin($stationCode);
         if ($bin) {
-            $bin->update([
-                'capacity_organik' => $s1 !== null ? (float)$s1 : $bin->capacity_organik,
-                'capacity_plastik' => $s2 !== null ? (float)$s2 : $bin->capacity_plastik,
-                'capacity_kertas'  => $s3 !== null ? (float)$s3 : $bin->capacity_kertas,
-                'capacity_logam'   => $s4 !== null ? (float)$s4 : $bin->capacity_logam,
-                'last_sync_at'     => now(),
-            ]);
+            if (Schema::hasColumn('smart_bins', 'capacity_organic')) {
+                $bin->update([
+                    'capacity_organic' => $s1 !== null ? (float)$s1 : $bin->capacity_organic,
+                    'capacity_plastic' => $s2 !== null ? (float)$s2 : $bin->capacity_plastic,
+                    'capacity_paper'   => $s3 !== null ? (float)$s3 : $bin->capacity_paper,
+                    'capacity_metal'   => $s4 !== null ? (float)$s4 : $bin->capacity_metal,
+                    'last_ping_at'     => now(),
+                    'is_online'        => true,
+                ]);
+            } else {
+                $bin->update([
+                    'capacity_organik' => $s1 !== null ? (float)$s1 : $bin->capacity_organik,
+                    'capacity_plastik' => $s2 !== null ? (float)$s2 : $bin->capacity_plastik,
+                    'capacity_kertas'  => $s3 !== null ? (float)$s3 : $bin->capacity_kertas,
+                    'capacity_logam'   => $s4 !== null ? (float)$s4 : $bin->capacity_logam,
+                    'last_sync_at'     => now(),
+                ]);
+            }
         }
 
         // Cache untuk Public Monitor
@@ -196,18 +226,22 @@ class StationApiController extends Controller
 
     /**
      * 4. Daftar Titik SmartBin Terdekat (untuk App Mobile / User Portal).
-     * GET /api/station/nearby?lat=-6.9298&lng=107.7181
+     * GET /api/station/nearby?latitude=-6.9298&longitude=107.7181
      */
     public function getNearby(Request $request)
     {
-        $userLat = $request->query('lat');
-        $userLng = $request->query('lng');
+        $userLat = $request->query('latitude', $request->query('lat'));
+        $userLng = $request->query('longitude', $request->query('lng'));
+
+        if ($userLat !== null) $userLat = (float) $userLat;
+        if ($userLng !== null) $userLng = (float) $userLng;
 
         $bins = SmartBin::all()->map(function ($b) use ($userLat, $userLng) {
             $distKm = $b->getDistanceFrom($userLat, $userLng);
+            $stationCode = $b->station_code ?: ($b->uuid ?: "STATION-{$b->id}");
             return [
                 'id' => $b->id,
-                'station_code' => $b->uuid,
+                'station_code' => $stationCode,
                 'name' => $b->name,
                 'location_name' => $b->location_name,
                 'latitude' => (float) $b->latitude,
@@ -216,12 +250,12 @@ class StationApiController extends Controller
                 'distance_km' => $distKm,
                 'distance_text' => $distKm !== null ? ($distKm < 1.0 ? round($distKm * 1000) . ' m' : $distKm . ' km') : 'Tidak diketahui',
                 'capacities' => [
-                    'organik' => (float) $b->capacity_organik,
-                    'plastik' => (float) $b->capacity_plastik,
-                    'kertas'  => (float) $b->capacity_kertas,
-                    'logam'   => (float) $b->capacity_logam,
+                    'organik' => (float) ($b->capacity_organic ?? $b->capacity_organik ?? 0),
+                    'plastik' => (float) ($b->capacity_plastic ?? $b->capacity_plastik ?? 0),
+                    'kertas'  => (float) ($b->capacity_paper ?? $b->capacity_kertas ?? 0),
+                    'logam'   => (float) ($b->capacity_metal ?? $b->capacity_logam ?? 0),
                 ],
-                'is_online' => $b->last_sync_at && $b->last_sync_at->diffInMinutes(now()) <= 15,
+                'is_online' => (bool) ($b->is_online || ($b->last_sync_at && $b->last_sync_at->diffInMinutes(now()) <= 15)),
             ];
         });
 
