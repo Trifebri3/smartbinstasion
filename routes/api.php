@@ -92,3 +92,20 @@ Route::get('/captures/recent', [\App\Http\Controllers\Api\CaptureApiController::
 // Endpoint untuk layar publik real-time update
 Route::get('/public/summary', [\App\Http\Controllers\PublicMonitorController::class, 'getSummary']);
 
+// ============================================================================
+// API SMARTBIN RASPBERRY PI STATION & USER GAMIFICATION
+// ============================================================================
+use App\Http\Controllers\Api\StationApiController;
+
+// Verifikasi QR Code Pengguna dari Kamera SmartBin
+Route::post('/station/verify-qr', [StationApiController::class, 'verifyQr']);
+
+// Catat Setoran Sampah dan Tambahkan Poin (Gamifikasi)
+Route::post('/station/deposit', [StationApiController::class, 'storeDeposit']);
+
+// Sinkronisasi Telemetri Kapasitas Sensor & Status Wadah
+Route::post('/station/telemetry', [StationApiController::class, 'syncTelemetry']);
+
+// Daftar Titik SmartBin Terdekat (dengan filter jarak GPS)
+Route::get('/station/nearby', [StationApiController::class, 'getNearby']);
+
