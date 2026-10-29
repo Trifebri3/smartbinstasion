@@ -9,16 +9,7 @@ class WasteDeposit extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'user_id',
-        'smart_bin_id',
-        'category',
-        'points_earned',
-        'weight_est_kg',
-        'photo_path',
-        'confidence',
-        'source',
-    ];
+    protected $guarded = [];
 
     protected $casts = [
         'confidence' => 'float',
@@ -33,6 +24,6 @@ class WasteDeposit extends Model
 
     public function smartBin()
     {
-        return $this->belongsTo(SmartBin::class);
+        return $this->belongsTo(SmartBin::class, 'smart_bin_id');
     }
 }

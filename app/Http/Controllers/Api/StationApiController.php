@@ -136,22 +136,40 @@ class StationApiController extends Controller
             $bin = $this->findSmartBin($stationCode);
             $binId = $bin ? $bin->id : 1;
 
-            // Catat transaksi setoran
-            WasteDeposit::create([
+            // Buat record setoran yang adaptif terhadap kolom tabel
+            $depositData = [
                 'user_id' => $user->id,
-                'smart_bin_id' => $binId,
                 'category' => $category,
                 'points_earned' => $pointsEarned,
                 'confidence' => $confidence,
-                'weight_est_kg' => match($category) {
+            ];
+
+            if (Schema::hasColumn('waste_deposits', 'station_code')) {
+                $depositData['station_code'] = $stationCode;
+            }
+            if (Schema::hasColumn('waste_deposits', 'smart_bin_id')) {
+                $depositData['smart_bin_id'] = $binId;
+            }
+            if (Schema::hasColumn('waste_deposits', 'category_label')) {
+                $depositData['category_label'] = $categoryLabel;
+            }
+            if (Schema::hasColumn('waste_deposits', 'target_bin')) {
+                $depositData['target_bin'] = $targetBin;
+            }
+            if (Schema::hasColumn('waste_deposits', 'weight_est_kg')) {
+                $depositData['weight_est_kg'] = match($category) {
                     'organik' => 0.35,
                     'plastik' => 0.15,
                     'kertas' => 0.20,
                     'logam', 'logam_kaca' => 0.40,
                     default => 0.25
-                },
-                'source' => 'station_camera',
-            ]);
+                };
+            }
+            if (Schema::hasColumn('waste_deposits', 'source')) {
+                $depositData['source'] = 'station_camera';
+            }
+
+            WasteDeposit::create($depositData);
 
             // Akumulasi Poin Pengguna
             $user->increment('points', $pointsEarned);
