@@ -153,18 +153,40 @@
                     <span class="text-xs sm:text-sm">Masuk dengan Google (Cepat)</span>
                 </a>
 
-                <div class="relative my-5">
+                <div class="relative my-4">
                     <div class="absolute inset-0 flex items-center">
                         <div class="w-full border-t border-slate-200"></div>
                     </div>
                     <div class="relative flex justify-center text-[11px] uppercase">
-                        <span class="bg-white px-3 text-slate-400 font-semibold">atau dengan email</span>
+                        <span class="bg-white px-3 text-slate-400 font-semibold">atau masuk sebagai admin</span>
                     </div>
+                </div>
+
+                <!-- 1-Click Fast Admin Login Shortcut -->
+                <div class="p-3.5 rounded-2xl bg-slate-900 border border-slate-800 text-white flex items-center justify-between gap-3 shadow-md mb-4">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="text-xs font-bold text-white flex items-center gap-1.5">
+                                <span>Login Administrator</span>
+                                <span class="text-[9px] uppercase px-1.5 py-0.5 bg-emerald-500/30 text-emerald-300 font-mono font-bold rounded">1-Click</span>
+                            </div>
+                            <div class="text-[11px] text-slate-400">admin@smartbin.myoin.id</div>
+                        </div>
+                    </div>
+                    <button type="button" onclick="quickLoginAdmin()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg transition shadow-sm flex items-center gap-1 shrink-0">
+                        <span>Masuk Langsung</span>
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </button>
                 </div>
             </div>
 
             <!-- 2. Credential Form -->
-            <form method="POST" action="{{ route('login') }}" class="space-y-4">
+            <form id="login-form" method="POST" action="{{ route('login') }}" class="space-y-4">
                 @csrf
 
                 <!-- Email -->
@@ -222,5 +244,29 @@
 
     </div>
 
+    <script>
+        function quickLoginAdmin() {
+            const emailEl = document.getElementById('email');
+            const passEl = document.getElementById('password');
+            if (emailEl && passEl) {
+                emailEl.value = 'admin@smartbin.myoin.id';
+                passEl.value = 'admin123';
+                document.getElementById('login-form').submit();
+            }
+        }
+
+        // Auto-fill when visited with ?as=admin
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('as') === 'admin') {
+                const emailEl = document.getElementById('email');
+                const passEl = document.getElementById('password');
+                if (emailEl && passEl) {
+                    emailEl.value = 'admin@smartbin.myoin.id';
+                    passEl.value = 'admin123';
+                }
+            }
+        });
+    </script>
 </body>
 </html>

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Schema;
 class PublicLandingController extends Controller
 {
     /**
-     * Halaman Utama Publik Smart Bin — WIn Bandung.
+     * Halaman Utama Publik Smart Bin — UIN Bandung.
      */
     public function index()
     {

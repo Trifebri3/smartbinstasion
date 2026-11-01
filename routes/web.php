@@ -10,7 +10,7 @@ use App\Http\Controllers\ServoController;
 use App\Http\Middleware\EnsureUserIsAdmin;
 
 // ==============================================================
-// 1. PUBLIC-FIRST EXPERIENCE (SMART BIN — WIn Bandung)
+// 1. PUBLIC-FIRST EXPERIENCE (SMART BIN — UIN Bandung)
 // Akses terbuka untuk publik tanpa wajib login
 // ==============================================================
 Route::get('/', [PublicLandingController::class, 'index'])->name('home');
