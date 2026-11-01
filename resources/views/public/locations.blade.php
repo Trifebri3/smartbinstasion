@@ -77,7 +77,7 @@
                         <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> Penuh</span>
                         <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-slate-400"></span> Offline</span>
                     </div>
-                    <span class="hidden sm:inline font-mono text-[10px]">OpenStreetMap • Leaflet</span>
+                    <span class="hidden sm:inline font-mono text-[10px]">CARTO Voyager • OpenStreetMap • Leaflet</span>
                 </div>
 
                 <div id="map"></div>
@@ -178,10 +178,11 @@
 
         map = L.map('map').setView([defaultLat, defaultLng], 16);
 
-        // Tile layer OpenStreetMap
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; OpenStreetMap contributors • SMART BIN WIn Bandung'
+        // Tile layer modern & stabil via CARTO Voyager (Bebas blokir 403 & responsif cepat)
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            maxZoom: 20,
+            subdomains: 'abcd',
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a> • SMART BIN WIn Bandung'
         }).addTo(map);
 
         // Pasang Pin untuk Setiap Stasiun
