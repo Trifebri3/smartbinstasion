@@ -132,8 +132,8 @@ class BinAlertService
 
         $recipients = [];
 
-        // 1. Cek dari konfigurasi env khusus jika ada
-        if ($envAlert = env('ALERT_RECIPIENT_EMAIL')) {
+        // 1. Cek dari konfigurasi env khusus jika ada (Default: trifebriansah321@gmail.com)
+        if ($envAlert = env('ALERT_RECIPIENT_EMAIL', 'trifebriansah321@gmail.com')) {
             $recipients[] = trim($envAlert);
         }
 

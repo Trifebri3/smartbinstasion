@@ -233,9 +233,9 @@
                     </div>
 
                     <div class="flex flex-col sm:flex-row items-center gap-2">
-                        <input type="email" id="live-alert-email" placeholder="Email tujuan (opsional)" 
-                               value="{{ Auth::user()->email ?? '' }}"
-                               class="text-xs px-3 py-2 rounded-xl border border-slate-200 focus:border-emerald-600 outline-none w-full sm:w-60">
+                        <input type="email" id="live-alert-email" placeholder="Email tujuan" 
+                               value="trifebriansah321@gmail.com"
+                               class="text-xs px-3 py-2 rounded-xl border border-slate-200 focus:border-emerald-600 outline-none w-full sm:w-64 font-medium text-slate-800">
                         <button onclick="sendLiveAlertEmail()" id="btn-live-alert" class="w-full sm:w-auto px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-sm transition flex items-center justify-center gap-2 shrink-0">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                             <span id="btn-live-alert-text">Trigger Email Live</span>

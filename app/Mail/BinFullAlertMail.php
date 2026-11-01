@@ -37,7 +37,7 @@ class BinFullAlertMail extends Mailable
         $chambersStr = !empty($this->fullChambers) ? implode(', ', $this->fullChambers) : 'Kapasitas Kritis';
 
         return new Envelope(
-            subject: "⚠️ [PERINGATAN SAMPAH PENUH] {$stationName} ({$stationCode}) — {$chambersStr}",
+            subject: "⚠️ [PERINGATAN] TEMPAT SAMPAH SUDAH PENUH - SEGERA AMBIL! ({$stationName} - {$stationCode})",
         );
     }
 

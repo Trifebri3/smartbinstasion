@@ -172,9 +172,9 @@
 
         <!-- Alert Banner -->
         <div class="alert-banner">
-            <div class="alert-title">PERINGATAN: Kapasitas Wadah Mencapai Batas Kritis</div>
+            <div class="alert-title">⚠️ PERINGATAN: TEMPAT SAMPAH SUDAH PENUH — SEGERA AMBIL!</div>
             <p class="alert-desc">
-                Satu atau lebih kompartemen tempat sampah telah terisi &ge; 85%. Mohon tim kebersihan kampus UIN segera melakukan pengosongan wadah.
+                <strong>Halo Tim Petugas & Kebersihan Kampus UIN Bandung,</strong> tempat sampah di stasiun ini sudah penuh (&ge; 85%). Mohon segera lakukan pengangkutan dan pengosongan wadah sekarang agar mahasiswa dan civitas kampus dapat terus memilah sampah.
             </p>
         </div>
 
