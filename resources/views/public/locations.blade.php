@@ -3,17 +3,18 @@
 @section('title', 'Peta Lokasi Smart Bin — WIn Bandung')
 
 @push('styles')
-<!-- Leaflet CSS -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<!-- Leaflet CSS (CDN Cloudflare stabil & bebas hambatan SRI) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
 <style>
     #map {
         height: 580px;
+        width: 100%;
         z-index: 10;
         border-radius: 1.25rem;
     }
     @media (max-width: 768px) {
         #map {
-            height: 380px;
+            height: 400px;
         }
     }
     .custom-bin-marker {
@@ -22,10 +23,14 @@
         justify-content: center;
         border-radius: 9999px;
         border: 2px solid white;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         color: white;
         font-weight: bold;
-        font-size: 11px;
+        font-size: 13px;
+        transition: transform 0.2s;
+    }
+    .custom-bin-marker:hover {
+        transform: scale(1.15);
     }
 </style>
 @endpush
@@ -157,8 +162,8 @@
 @endsection
 
 @push('scripts')
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<!-- Leaflet JS (CDN Cloudflare stabil) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
     // Data Stasiun dari Backend Laravel
     const stations = @json($smartBins);
@@ -172,18 +177,59 @@
     });
 
     function initMap() {
+        if (typeof L === 'undefined') {
+            console.error('Leaflet JS belum termuat');
+            return;
+        }
+
         // Pusat peta awal: Area Kampus UIN SGD Cibiru Bandung
         const defaultLat = -6.929824;
         const defaultLng = 107.718162;
 
-        map = L.map('map').setView([defaultLat, defaultLng], 16);
+        map = L.map('map', {
+            center: [defaultLat, defaultLng],
+            zoom: 16,
+            zoomControl: true,
+            scrollWheelZoom: true
+        });
 
-        // Tile layer modern & stabil via CARTO Voyager (Bebas blokir 403 & responsif cepat)
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        // 1. Layer Utama: Google Maps Streets (Anti-Blokir 100%, Stabil di Seluruh Jaringan Indonesia)
+        const googleStreets = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+            maxZoom: 20,
+            attribution: '&copy; Google Maps • SMART BIN WIn Bandung'
+        });
+
+        // 2. Layer Alternatif: CARTO Voyager (Minimalis Bersih)
+        const cartoVoyager = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
             maxZoom: 20,
             subdomains: 'abcd',
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a> • SMART BIN WIn Bandung'
-        }).addTo(map);
+            attribution: '&copy; OpenStreetMap &copy; CARTO'
+        });
+
+        // 3. Layer Satelit: Google Hybrid
+        const googleSatellite = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+            maxZoom: 20,
+            attribution: '&copy; Google Satellite'
+        });
+
+        // Aktifkan Google Streets secara default
+        googleStreets.addTo(map);
+
+        // Tambahkan pilihan ganti mode peta di pojok kanan atas
+        const baseMaps = {
+            "🗺️ Google Peta": googleStreets,
+            "🌍 CARTO Voyager": cartoVoyager,
+            "🛰️ Citra Satelit": googleSatellite
+        };
+        L.control.layers(baseMaps).addTo(map);
+
+        // Pastikan render ukuran peta sempurna
+        setTimeout(() => {
+            map.invalidateSize();
+        }, 300);
+        window.addEventListener('resize', () => {
+            if (map) map.invalidateSize();
+        });
 
         // Pasang Pin untuk Setiap Stasiun
         stations.forEach(bin => {
