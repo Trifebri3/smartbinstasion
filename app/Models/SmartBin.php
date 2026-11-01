@@ -56,6 +56,26 @@ class SmartBin extends Model
         return $this->attributes['capacity_logam'] ?? $this->attributes['capacity_metal'] ?? 0;
     }
 
+    public function getCapacityOrganicAttribute()
+    {
+        return $this->attributes['capacity_organic'] ?? $this->attributes['capacity_organik'] ?? 0;
+    }
+
+    public function getCapacityPlasticAttribute()
+    {
+        return $this->attributes['capacity_plastic'] ?? $this->attributes['capacity_plastik'] ?? 0;
+    }
+
+    public function getCapacityPaperAttribute()
+    {
+        return $this->attributes['capacity_paper'] ?? $this->attributes['capacity_kertas'] ?? 0;
+    }
+
+    public function getCapacityMetalAttribute()
+    {
+        return $this->attributes['capacity_metal'] ?? $this->attributes['capacity_logam'] ?? 0;
+    }
+
     /**
      * Hitung jarak dari koordinat pengguna dalam kilometer (rumus Haversine).
      */

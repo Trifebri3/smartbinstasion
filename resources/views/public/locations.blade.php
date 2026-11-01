@@ -186,7 +186,12 @@
 
         // Pasang Pin untuk Setiap Stasiun
         stations.forEach(bin => {
-            const statusColor = getStatusColor(bin);
+            const capOrg = Number(bin.capacity_organic ?? bin.capacity_organik ?? 0);
+            const capPla = Number(bin.capacity_plastic ?? bin.capacity_plastik ?? 0);
+            const capPap = Number(bin.capacity_paper ?? bin.capacity_kertas ?? 0);
+            const capMet = Number(bin.capacity_metal ?? bin.capacity_logam ?? 0);
+            const avgCap = Math.round((capOrg + capPla + capPap + capMet) / 4);
+            const statusColor = getStatusColor(bin, capOrg, capPla, capPap, capMet);
             
             // Custom Marker Icon dengan CSS
             const customIcon = L.divIcon({
@@ -203,12 +208,12 @@
 
             const popupHtml = `
                 <div style="font-family: 'Plus Jakarta Sans', sans-serif; min-width: 220px; padding: 4px;">
-                    <div style="font-size: 10px; font-weight: bold; color: #287A4D; margin-bottom: 2px;">${bin.station_code}</div>
+                    <div style="font-size: 10px; font-weight: bold; color: #287A4D; margin-bottom: 2px;">${bin.station_code || 'STATION'}</div>
                     <div style="font-size: 13px; font-weight: bold; color: #26352D; margin-bottom: 4px;">${bin.name}</div>
                     <div style="font-size: 11px; color: #5A6E63; margin-bottom: 8px;">${bin.location_name}</div>
                     
                     <div style="font-size: 11px; margin-bottom: 8px; border-top: 1px solid #E5EAE7; padding-top: 6px;">
-                        <div>Kapasitas Rata-rata: <strong>${Math.round((bin.capacity_organic + bin.capacity_plastic + bin.capacity_paper + bin.capacity_metal)/4)}%</strong></div>
+                        <div>Kapasitas Rata-rata: <strong>${avgCap}%</strong></div>
                     </div>
 
                     <div style="display: flex; gap: 8px;">
@@ -228,9 +233,9 @@
         });
     }
 
-    function getStatusColor(bin) {
+    function getStatusColor(bin, capOrg, capPla, capPap, capMet) {
         if (!bin.is_online || bin.status === 'maintenance') return '#64748b';
-        const maxCap = Math.max(bin.capacity_organic || 0, bin.capacity_plastic || 0, bin.capacity_paper || 0, bin.capacity_metal || 0);
+        const maxCap = Math.max(capOrg || 0, capPla || 0, capPap || 0, capMet || 0);
         if (bin.status === 'full' || maxCap >= 90) return '#EF4444';
         if (maxCap >= 75) return '#F59E0B';
         return '#287A4D';
@@ -354,3 +359,4 @@
     }
 </script>
 @endpush
+

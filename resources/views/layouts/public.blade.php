@@ -308,3 +308,4 @@
     @stack('scripts')
 </body>
 </html>
+
