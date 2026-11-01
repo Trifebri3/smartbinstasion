@@ -13,11 +13,11 @@ class SmartBinSeeder extends Seeder
 {
     public function run(): void
     {
-        // 1. Akun Admin (Full Control & Full Akses ke SmartBin)
+        // 1. Akun Admin Resmi UIN Bandung (Full Control & Full Akses ke SmartBin)
         User::updateOrCreate(
             ['email' => 'admin@smartbin.myoin.id'],
             [
-                'name' => 'Administrator SmartBin',
+                'name' => 'Administrator UIN Sunan Gunung Djati Bandung',
                 'password' => Hash::make('admin123'),
                 'role' => 'admin',
                 'points' => 9999,

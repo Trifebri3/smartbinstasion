@@ -61,3 +61,4 @@ class BinFullAlertMail extends Mailable
         return [];
     }
 }
+

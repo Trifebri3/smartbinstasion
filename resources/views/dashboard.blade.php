@@ -1,12 +1,61 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-2xl text-gray-900 leading-tight">
-            {{ __('SmartBin AI Dashboard') }}
-        </h2>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+                <h2 class="font-extrabold text-xl text-win-dark leading-tight flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-win-green"></span>
+                    <span>Panel Kendali Utama SmartBin IoT</span>
+                </h2>
+                <p class="text-xs text-win-slate mt-0.5">Sistem Monitoring & Otomasi Pemilahan Sampah Kampus UIN Sunan Gunung Djati Bandung</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Sistem Aktif
+                </span>
+            </div>
+        </div>
     </x-slot>
 
-    <div class="py-8 bg-white min-h-screen">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <div class="py-6 min-h-screen bg-[#F8FAF9]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+
+            <!-- ============================================================== -->
+            <!-- 1. KARTU IDENTITAS AKUN ADMINISTRATOR UIN -->
+            <!-- ============================================================== -->
+            <div class="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div class="flex items-center gap-3.5">
+                    <div class="w-12 h-12 rounded-2xl bg-win-green flex items-center justify-center text-white font-black text-sm tracking-wider shadow-sm shrink-0">
+                        UIN
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <h3 class="text-base font-extrabold text-win-dark">{{ Auth::user()->name }}</h3>
+                            <span class="bg-win-green-light border border-emerald-200 text-win-green text-[10px] font-bold px-2 py-0.5 rounded-full">
+                                Super Administrator
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-0.5">{{ Auth::user()->email }} • Akses Penuh Mesin & Telemetri</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-2 w-full md:w-auto pt-2 md:pt-0 border-t md:border-t-0 border-slate-100">
+                    <div class="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs flex items-center gap-2">
+                        <span class="text-slate-500 font-medium text-[11px]">Token Master QR:</span>
+                        <code class="font-mono font-bold text-win-green">{{ Auth::user()->qr_code_token ?? 'SB-ADM-MASTER99' }}</code>
+                    </div>
+
+                    <a href="{{ route('profile.edit') }}" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition flex items-center gap-1.5 shadow-sm">
+                        <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        <span>Edit Profil</span>
+                    </a>
+
+                    <a href="{{ route('user.portal') }}" class="px-3.5 py-1.5 bg-win-green hover:bg-win-green-dark text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5 shadow-sm">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                        <span>Tinjau Mode Pengguna</span>
+                    </a>
+                </div>
+            </div>
             
             <!-- Camera Configuration -->
             <div class="border border-gray-100 rounded-2xl p-5 md:p-6 flex flex-col md:flex-row items-start md:items-center justify-between bg-white shadow-sm hover:shadow-md transition-shadow">
