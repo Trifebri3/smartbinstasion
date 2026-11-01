@@ -8,8 +8,14 @@
     <title>@yield('title', 'Smart Bin — UIN Bandung')</title>
     <meta name="description" content="Tempat sampah pintar IoT dan panduan pemilahan sampah kampus UIN Sunan Gunung Djati Bandung.">
 
-    <!-- PWA -->
+    <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#287A4D">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="SmartBin UIN">
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
     <link rel="manifest" href="/manifest.json">
 
     <!-- Font: Plus Jakarta Sans -->
@@ -83,6 +89,11 @@
 
             <!-- RIGHT ACTION -->
             <div class="flex items-center gap-2.5">
+                <button id="btn-pwa-install" onclick="installPWA()" class="hidden text-xs font-bold bg-win-green text-white hover:bg-win-green-dark px-3 py-1.5 rounded-lg transition items-center gap-1.5 shadow-sm">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    <span>Pasang App</span>
+                </button>
+
                 @auth
                     <a href="{{ route('user.portal') }}" class="text-xs font-bold text-win-green bg-win-green-light hover:bg-emerald-100 px-3 py-1.5 rounded-lg transition flex items-center gap-1.5">
                         <svg class="w-3.5 h-3.5 text-win-green shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -146,6 +157,34 @@
         function toggleNav() {
             const el = document.getElementById('nav-mobile');
             el.classList.toggle('hidden');
+        }
+
+        // PWA Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('SW Registered:', reg.scope))
+                    .catch(err => console.log('SW Failed:', err));
+            });
+        }
+
+        let deferredPrompt = null;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            const btn = document.getElementById('btn-pwa-install');
+            if (btn) btn.classList.remove('hidden');
+        });
+
+        function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(() => {
+                    deferredPrompt = null;
+                    const btn = document.getElementById('btn-pwa-install');
+                    if (btn) btn.classList.add('hidden');
+                });
+            }
         }
     </script>
 
