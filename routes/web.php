@@ -2,16 +2,28 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PublicLandingController;
 use App\Http\Controllers\PublicMonitorController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\UserPortalController;
 use App\Http\Controllers\ServoController;
 use App\Http\Middleware\EnsureUserIsAdmin;
 
-// Layar Tampilan Publik SmartBin (smartbin.myoin.id)
-Route::get('/', [PublicMonitorController::class, 'index'])->name('home');
+// ==============================================================
+// 1. PUBLIC-FIRST EXPERIENCE (SMART BIN — WIn Bandung)
+// Akses terbuka untuk publik tanpa wajib login
+// ==============================================================
+Route::get('/', [PublicLandingController::class, 'index'])->name('home');
+Route::get('/locations', [PublicLandingController::class, 'locations'])->name('public.locations');
+Route::get('/peta', [PublicLandingController::class, 'locations'])->name('public.locations.alias');
+Route::get('/education', [PublicLandingController::class, 'education'])->name('public.education');
+Route::get('/edukasi', [PublicLandingController::class, 'education'])->name('public.education.alias');
+Route::get('/bins/{id}', [PublicLandingController::class, 'binDetail'])->name('public.bin-detail');
+
+// Tampilan Monitor IoT Diagnostik (Kamera & Status Sensor Stasiun)
 Route::get('/monitor', [PublicMonitorController::class, 'index'])->name('public.monitor');
 Route::get('/public-monitor', [PublicMonitorController::class, 'index'])->name('public.monitor.alias');
+Route::get('/api/public-summary', [PublicMonitorController::class, 'getSummary'])->name('api.public-summary');
 
 // Autentikasi Google OAuth
 Route::get('/auth/google', [GoogleAuthController::class, 'redirectToGoogle'])->name('auth.google');

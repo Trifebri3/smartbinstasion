@@ -1,0 +1,17 @@
+{
+  "name": "Smart Bin — WIn Bandung",
+  "short_name": "SmartBin WIn",
+  "description": "Smart Waste Management & Environmental Education Platform Kota Bandung",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#287A4D",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}

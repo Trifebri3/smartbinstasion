@@ -76,4 +76,61 @@ class SmartBin extends Model
         
         return round($distKm, 2);
     }
+
+    /**
+     * Dapatkan status publik Smart Bin: Tersedia, Hampir Penuh, Penuh, Offline.
+     */
+    public function getPublicStatus(): array
+    {
+        $isOnline = $this->is_online ?? true;
+        if (!$isOnline || $this->status === 'maintenance') {
+            return [
+                'status' => 'offline',
+                'label' => 'Offline',
+                'color' => '#64748b',
+                'bg' => 'bg-slate-100 text-slate-700 border-slate-300',
+                'dot' => 'bg-slate-400',
+                'desc' => 'Perangkat sedang tidak merespons ping / dalam pemeliharaan.',
+            ];
+        }
+
+        $capacities = [
+            (float) $this->capacity_organik,
+            (float) $this->capacity_plastik,
+            (float) $this->capacity_kertas,
+            (float) $this->capacity_logam,
+        ];
+        $maxCap = count($capacities) > 0 ? max($capacities) : 0;
+
+        if ($this->status === 'full' || $maxCap >= 90) {
+            return [
+                'status' => 'penuh',
+                'label' => 'Penuh',
+                'color' => '#EF4444',
+                'bg' => 'bg-rose-100 text-rose-800 border-rose-300',
+                'dot' => 'bg-rose-500',
+                'desc' => 'Kapasitas mencapai batas (> 90%). Menunggu petugas pengangkutan.',
+            ];
+        }
+
+        if ($maxCap >= 75) {
+            return [
+                'status' => 'hampir_penuh',
+                'label' => 'Hampir Penuh',
+                'color' => '#F59E0B',
+                'bg' => 'bg-amber-100 text-amber-800 border-amber-300',
+                'dot' => 'bg-amber-500',
+                'desc' => 'Kapasitas terisi 75%-90%. Segera dijadwalkan pengosongan.',
+            ];
+        }
+
+        return [
+            'status' => 'tersedia',
+            'label' => 'Tersedia',
+            'color' => '#287A4D',
+            'bg' => 'bg-emerald-100 text-emerald-800 border-emerald-300',
+            'dot' => 'bg-emerald-500',
+            'desc' => 'Smart Bin aktif dan memiliki ruang cukup untuk membuang sampah.',
+        ];
+    }
 }
