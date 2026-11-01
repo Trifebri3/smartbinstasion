@@ -69,6 +69,30 @@ Route::post('/sensors/update', function (Request $request) {
             'sensor4' => $data['sensor4'] ?? null,
         ]);
     }
+
+    // Deteksi Otomatis & Kirim Email Peringatan saat Sensor >= 85% (Cooldown 30 Menit)
+    $s1 = (float)($data['sensor1'] ?? 0);
+    $s2 = (float)($data['sensor2'] ?? 0);
+    $s3 = (float)($data['sensor3'] ?? 0);
+    $s4 = (float)($data['sensor4'] ?? 0);
+    if ($s1 >= 85 || $s2 >= 85 || $s3 >= 85 || $s4 >= 85) {
+        try {
+            \App\Services\BinAlertService::sendAlert([
+                'id' => 1,
+                'station_code' => 'STATION-01',
+                'name' => 'SmartBin Stasiun Utama IoT',
+                'location_name' => 'Kampus 1 UIN Sunan Gunung Djati Bandung',
+                'organik' => $s1,
+                'plastik' => $s2,
+                'kertas'  => $s3,
+                'logam'   => $s4,
+                'latitude' => -6.929824,
+                'longitude' => 107.718162,
+            ], triggerType: 'automatic', triggeredBy: 'Sensor Telemetri ESP32 Live');
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning("Auto alert email error: " . $e->getMessage());
+        }
+    }
     
     return response()->json(['status' => 'success', 'message' => 'Data saved']);
 });

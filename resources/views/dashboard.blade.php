@@ -144,6 +144,141 @@
                     </div>
                 </div>
             </div>
+
+            <!-- ============================================================== -->
+            <!-- PUSAT NOTIFIKASI EMAIL SAMPAH PENUH (AUTO & MANUAL TRIGGER) -->
+            <!-- ============================================================== -->
+            <div class="border border-gray-100 rounded-2xl p-5 md:p-6 bg-white shadow-sm hover:shadow-md transition-shadow space-y-5">
+                <div class="border-b border-gray-100 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                            </svg>
+                            Pusat Notifikasi Email Sampah Penuh
+                        </h3>
+                        <p class="text-xs text-gray-500 mt-1">
+                            Sistem otomatis mengirim email saat keterisian &ge; 85%. Anda juga dapat memicu (trigger) pengiriman email secara manual.
+                        </p>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                            Auto-Alert: Aktif (&ge; 85%)
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Feedback Banner -->
+                <div id="email-alert-feedback" class="hidden p-4 rounded-xl text-xs sm:text-sm font-medium flex items-center justify-between">
+                    <span id="email-alert-msg"></span>
+                    <button onclick="document.getElementById('email-alert-feedback').classList.add('hidden')" class="font-bold ml-2 text-base">&times;</button>
+                </div>
+
+                <!-- Quick Manual Trigger for Live Sensors -->
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+                    <div class="space-y-1">
+                        <h4 class="text-sm font-bold text-slate-800">Trigger Email dari Sensor Live</h4>
+                        <p class="text-xs text-slate-500">Kirim email peringatan instan dengan data sensor kamera & ultrasonik saat ini.</p>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row items-center gap-2">
+                        <input type="email" id="live-alert-email" placeholder="Email tujuan (opsional)" 
+                               value="{{ Auth::user()->email ?? '' }}"
+                               class="text-xs px-3 py-2 rounded-xl border border-slate-200 focus:border-emerald-600 outline-none w-full sm:w-60">
+                        <button onclick="sendLiveAlertEmail()" id="btn-live-alert" class="w-full sm:w-auto px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-sm transition flex items-center justify-center gap-2 shrink-0">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                            <span id="btn-live-alert-text">Trigger Email Live</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Daftar Stasiun SmartBin Kampus UIN & Trigger per Stasiun -->
+                <div class="space-y-3 pt-2">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500">Stasiun SmartBin Terdaftar</h4>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        @if(isset($smartBins))
+                            @forelse($smartBins as $bin)
+                                @php
+                                    $capOrg = (int)($bin->capacity_organik ?? $bin->capacity_organic ?? 0);
+                                    $capPla = (int)($bin->capacity_plastik ?? $bin->capacity_plastic ?? 0);
+                                    $capPap = (int)($bin->capacity_kertas ?? $bin->capacity_paper ?? 0);
+                                    $capMet = (int)($bin->capacity_logam ?? $bin->capacity_metal ?? 0);
+                                    $maxCap = max($capOrg, $capPla, $capPap, $capMet);
+                                    $isFull = $maxCap >= 85;
+                                @endphp
+                                <div class="border border-slate-200 rounded-xl p-3.5 space-y-3 bg-white hover:border-slate-300 transition">
+                                    <div class="flex items-start justify-between gap-2">
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-[10px] font-mono font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded">
+                                                    {{ $bin->station_code }}
+                                                </span>
+                                                @if($isFull)
+                                                    <span class="text-[10px] font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200">
+                                                        KAPASITAS KRITIS
+                                                    </span>
+                                                @else
+                                                    <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
+                                                        NORMAL
+                                                    </span>
+                                                @endif
+                                            </div>
+                                            <h5 class="text-sm font-bold text-slate-800 mt-1">{{ $bin->name }}</h5>
+                                            <p class="text-[11px] text-slate-500 line-clamp-1">{{ $bin->location_name }}</p>
+                                        </div>
+
+                                        <button onclick="sendStationAlertEmail({{ $bin->id }}, '{{ $bin->name }}')" 
+                                                id="btn-alert-{{ $bin->id }}"
+                                                class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-rose-50 hover:text-rose-700 text-slate-700 text-xs font-bold transition flex items-center gap-1 shrink-0 border border-slate-200">
+                                            <svg class="w-3.5 h-3.5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                                            <span id="btn-alert-text-{{ $bin->id }}">Trigger Alert</span>
+                                        </button>
+                                    </div>
+
+                                    <!-- Mini Bars -->
+                                    <div class="grid grid-cols-4 gap-2 text-center text-[10px] pt-1 border-t border-slate-100">
+                                        <div>
+                                            <span class="text-slate-500">Org</span>
+                                            <div class="w-full bg-slate-100 rounded-full h-1 mt-0.5 overflow-hidden">
+                                                <div class="h-1 rounded-full {{ $capOrg >= 85 ? 'bg-rose-600' : 'bg-emerald-600' }}" style="width: {{ $capOrg }}%"></div>
+                                            </div>
+                                            <span class="font-bold text-slate-700">{{ $capOrg }}%</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-slate-500">Pla</span>
+                                            <div class="w-full bg-slate-100 rounded-full h-1 mt-0.5 overflow-hidden">
+                                                <div class="h-1 rounded-full {{ $capPla >= 85 ? 'bg-rose-600' : 'bg-amber-500' }}" style="width: {{ $capPla }}%"></div>
+                                            </div>
+                                            <span class="font-bold text-slate-700">{{ $capPla }}%</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-slate-500">Ker</span>
+                                            <div class="w-full bg-slate-100 rounded-full h-1 mt-0.5 overflow-hidden">
+                                                <div class="h-1 rounded-full {{ $capPap >= 85 ? 'bg-rose-600' : 'bg-blue-600' }}" style="width: {{ $capPap }}%"></div>
+                                            </div>
+                                            <span class="font-bold text-slate-700">{{ $capPap }}%</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-slate-500">Log</span>
+                                            <div class="w-full bg-slate-100 rounded-full h-1 mt-0.5 overflow-hidden">
+                                                <div class="h-1 rounded-full {{ $capMet >= 85 ? 'bg-rose-600' : 'bg-purple-600' }}" style="width: {{ $capMet }}%"></div>
+                                            </div>
+                                            <span class="font-bold text-slate-700">{{ $capMet }}%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="col-span-2 p-4 text-center text-xs text-slate-400 bg-slate-50 rounded-xl">
+                                    Belum ada data stasiun SmartBin.
+                                </div>
+                            @endforelse
+                        @endif
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -276,5 +411,86 @@
             setInterval(fetchSensors, 2000);
             fetchSensors(); // Fetch pertama kali
         });
+    </script>
+
+    <!-- Email Alert Trigger Script -->
+    <script>
+        function showEmailFeedback(isSuccess, message) {
+            const box = document.getElementById('email-alert-feedback');
+            const msg = document.getElementById('email-alert-msg');
+            box.classList.remove('hidden', 'bg-emerald-50', 'text-emerald-800', 'border-emerald-200', 'bg-rose-50', 'text-rose-800', 'border-rose-200');
+            
+            if (isSuccess) {
+                box.classList.add('bg-emerald-50', 'text-emerald-800', 'border', 'border-emerald-200');
+            } else {
+                box.classList.add('bg-rose-50', 'text-rose-800', 'border', 'border-rose-200');
+            }
+            msg.textContent = message;
+            box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function sendLiveAlertEmail() {
+            const btn = document.getElementById('btn-live-alert');
+            const btnText = document.getElementById('btn-live-alert-text');
+            const emailInput = document.getElementById('live-alert-email');
+            
+            btn.disabled = true;
+            btnText.textContent = 'Mengirim...';
+
+            fetch('{{ route("admin.sensors.alert-live") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    target_email: emailInput.value
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                btn.disabled = false;
+                btnText.textContent = 'Trigger Email Live';
+                showEmailFeedback(data.status === 'success', data.message);
+            })
+            .catch(err => {
+                btn.disabled = false;
+                btnText.textContent = 'Trigger Email Live';
+                showEmailFeedback(false, 'Gagal memicu email: ' + err.message);
+            });
+        }
+
+        function sendStationAlertEmail(stationId, stationName) {
+            const btnText = document.getElementById(`btn-alert-text-${stationId}`);
+            const btn = document.getElementById(`btn-alert-${stationId}`);
+            const emailInput = document.getElementById('live-alert-email');
+
+            if (btn) btn.disabled = true;
+            if (btnText) btnText.textContent = 'Mengirim...';
+
+            fetch(`/admin/stations/${stationId}/alert-email`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    target_email: emailInput ? emailInput.value : ''
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (btn) btn.disabled = false;
+                if (btnText) btnText.textContent = 'Trigger Alert';
+                showEmailFeedback(data.status === 'success', `[${stationName}] ` + data.message);
+            })
+            .catch(err => {
+                if (btn) btn.disabled = false;
+                if (btnText) btnText.textContent = 'Trigger Alert';
+                showEmailFeedback(false, `[${stationName}] Gagal: ` + err.message);
+            });
+        }
     </script>
 </x-app-layout>

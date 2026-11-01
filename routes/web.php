@@ -35,11 +35,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/portal/scan-mobile', [UserPortalController::class, 'scanWasteFromMobile'])->name('user.scan-mobile');
 });
 
-// Dashboard Admin (Full Control: Servo, Rules, Manajemen Stasiun)
+// Dashboard Admin (Full Control: Servo, Rules, Manajemen Stasiun, Email Alert)
 Route::middleware(['auth', EnsureUserIsAdmin::class])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        $smartBins = \App\Models\SmartBin::all();
+        return view('dashboard', compact('smartBins'));
     })->name('dashboard');
+
+    // Trigger Notifikasi Email Sampah Penuh via Klik di Admin
+    Route::post('/admin/stations/{id}/alert-email', [\App\Http\Controllers\Admin\BinAlertController::class, 'triggerStationAlert'])->name('admin.stations.alert');
+    Route::post('/admin/sensors/alert-live', [\App\Http\Controllers\Admin\BinAlertController::class, 'triggerLiveSensorAlert'])->name('admin.sensors.alert-live');
 
     Route::resource('servos', ServoController::class);
     Route::get('/auto-sort', [\App\Http\Controllers\Api\AutoSortController::class, 'index'])->name('auto.sort');

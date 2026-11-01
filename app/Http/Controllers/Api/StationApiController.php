@@ -235,6 +235,19 @@ class StationApiController extends Controller
             'updated_at' => now()->toIso8601String(),
         ], now()->addMinutes(10));
 
+        // Deteksi Otomatis: Kirim Email Alert jika Kapasitas Penuh (>= 85%) dengan Cooldown 30 Menit
+        if ($bin) {
+            try {
+                \App\Services\BinAlertService::sendAlert(
+                    bin: $bin,
+                    triggerType: 'automatic',
+                    triggeredBy: "Sensor Telemetri {$stationCode}"
+                );
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning("Auto alert email error: " . $e->getMessage());
+            }
+        }
+
         return response()->json([
             'status' => 'ok',
             'station_code' => $stationCode,
