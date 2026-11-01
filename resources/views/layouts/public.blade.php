@@ -131,7 +131,7 @@
             <div class="flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-win-green"></span>
                 <span class="font-bold text-win-dark">SmartBin UIN Bandung</span>
-                <span>• Inovasi Pengelolaan Sampah Cerdas Kampus & Kota Bandung</span>
+                <span>• Inovasi Pengelolaan Sampah Cerdas Kampus UIN Sunan Gunung Djati Bandung</span>
             </div>
             <div class="flex items-center gap-4 text-[11px]">
                 <a href="{{ route('public.locations') }}" class="hover:text-win-green">Peta</a>

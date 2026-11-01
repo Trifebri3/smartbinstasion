@@ -20,7 +20,7 @@
 
                 <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-win-dark tracking-tight leading-tight">
                     Pilah Sampah Cerdas, <br class="hidden sm:inline">
-                    <span class="text-win-green">Kampus & Kota Bandung</span> Lebih Bersih.
+                    <span class="text-win-green">Kampus UIN Bandung</span> Lebih Bersih.
                 </h1>
 
                 <p class="text-sm sm:text-base text-win-slate max-w-xl mx-auto lg:mx-0 leading-relaxed">
@@ -46,7 +46,7 @@
                 <div class="flex items-center justify-center lg:justify-start gap-8 pt-4 border-t border-slate-100 text-xs">
                     <div>
                         <div class="font-extrabold text-lg text-win-dark">{{ $totalBins }} Titik</div>
-                        <div class="text-slate-400 text-[11px]">Stasiun Kampus & Sekitar</div>
+                        <div class="text-slate-400 text-[11px]">Stasiun Kampus UIN</div>
                     </div>
                     <div class="w-px h-7 bg-slate-200"></div>
                     <div>
@@ -160,7 +160,7 @@
         
         <div class="flex items-center justify-between">
             <div>
-                <h2 class="text-xl sm:text-2xl font-extrabold text-win-dark">Titik Smart Bin di Bandung</h2>
+                <h2 class="text-xl sm:text-2xl font-extrabold text-win-dark">Titik Smart Bin di Kampus UIN</h2>
                 <p class="text-xs text-slate-500 mt-0.5">Pantau keterisian stasiun secara transparan</p>
             </div>
             <a href="{{ route('public.locations') }}" class="text-xs font-bold text-win-green hover:underline flex items-center gap-1">

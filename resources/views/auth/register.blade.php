@@ -80,7 +80,7 @@
             </div>
 
             <div class="pt-6 border-t border-white/15 text-[11px] text-emerald-200/80 relative z-10 flex items-center justify-between">
-                <span>Inovasi UIN SGD Bandung & DLH</span>
+                <span>Inovasi SmartBin • UIN Sunan Gunung Djati Bandung</span>
                 <a href="{{ route('home') }}" class="text-white hover:underline flex items-center gap-1">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>

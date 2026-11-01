@@ -175,7 +175,7 @@ class PublicLandingController extends Controller
             // Ignore error & load fallback
         }
 
-        // Fallback default pilot stations UIN SGD & Kota Bandung
+        // Fallback default pilot stations Kampus UIN Sunan Gunung Djati Bandung
         return collect([
             new SmartBin([
                 'id' => 1,

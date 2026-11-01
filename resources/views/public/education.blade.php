@@ -10,7 +10,7 @@
         <div class="text-center max-w-xl mx-auto space-y-2">
             <h1 class="text-2xl sm:text-3xl font-extrabold text-win-dark">Panduan 4 Kategori Pemilahan</h1>
             <p class="text-xs sm:text-sm text-win-slate">
-                Pilah sampah sesuai wadah sebelum memasukkan ke Smart Bin untuk menjaga kelestarian kampus UIN & Kota Bandung.
+                Pilah sampah sesuai wadah sebelum memasukkan ke Smart Bin untuk menjaga kelestarian kampus UIN Sunan Gunung Djati Bandung.
             </p>
         </div>
 
