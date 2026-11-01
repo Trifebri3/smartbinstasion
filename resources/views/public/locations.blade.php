@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'Peta Lokasi Smart Bin — WIn Bandung')
+@section('title', 'Peta Lokasi Smart Bin — UIN Bandung')
 
 @push('styles')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
@@ -119,11 +119,15 @@
                             </div>
 
                             <div class="pt-1.5 border-t border-slate-100 flex items-center justify-between text-[11px]">
-                                <span class="text-slate-400" id="distance-{{ $bin->id }}">
+                                <span class="text-slate-400 inline-flex items-center gap-1" id="distance-{{ $bin->id }}">
+                                    <svg class="w-3 h-3 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    </svg>
                                     @if(isset($bin->distance_km))
-                                        📍 {{ $bin->distance_km }} km
+                                        <span>{{ $bin->distance_km }} km</span>
                                     @else
-                                        📍 Klik GPS
+                                        <span>Deteksi GPS</span>
                                     @endif
                                 </span>
                                 <div class="flex items-center gap-2">
@@ -193,12 +197,12 @@
             
             const customIcon = L.divIcon({
                 className: 'custom-bin-marker-wrapper',
-                html: `<div class="custom-bin-marker" style="background-color: ${statusColor}; width: 32px; height: 32px;">
-                        <span>🗑️</span>
+                html: `<div class="custom-bin-marker" style="background-color: ${statusColor}; width: 30px; height: 30px;">
+                        <svg style="width: 15px; height: 15px; color: white;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                        </div>`,
-                iconSize: [32, 32],
-                iconAnchor: [16, 16],
-                popupAnchor: [0, -16]
+                iconSize: [30, 30],
+                iconAnchor: [15, 15],
+                popupAnchor: [0, -15]
             });
 
             const marker = L.marker([bin.latitude, bin.longitude], { icon: customIcon }).addTo(map);
@@ -212,7 +216,7 @@
                     <div style="display: flex; gap: 8px;">
                         <a href="https://www.google.com/maps/search/?api=1&query=${bin.latitude},${bin.longitude}" target="_blank" 
                            style="background: #287A4D; color: white; padding: 4px 8px; border-radius: 6px; text-decoration: none; font-size: 11px; font-weight: bold;">
-                           🧭 Buka Rute
+                           Buka Rute &rarr;
                         </a>
                         <a href="/bins/${bin.id}" style="color: #287A4D; font-size: 11px; font-weight: bold; padding: 4px 0;">
                            Detail &rarr;
@@ -260,7 +264,7 @@
                 const lat = pos.coords.latitude;
                 const lng = pos.coords.longitude;
 
-                btnText.innerText = 'Lokasi Terdeteksi ✓';
+                btnText.innerText = 'Lokasi Terdeteksi';
                 statusText.innerText = `Lokasi Anda: ${lat.toFixed(5)}, ${lng.toFixed(5)}. Jarak stasiun diperbarui.`;
 
                 if (userMarker) map.removeLayer(userMarker);
@@ -272,12 +276,12 @@
                 });
 
                 userMarker = L.marker([lat, lng], { icon: userIcon }).addTo(map);
-                userMarker.bindPopup('<strong>📍 Posisi Anda</strong>').openPopup();
+                userMarker.bindPopup('<strong>Posisi Anda</strong>').openPopup();
 
                 stations.forEach(bin => {
                     const distKm = calculateHaversine(lat, lng, bin.latitude, bin.longitude);
                     const el = document.getElementById(`distance-${bin.id}`);
-                    if (el) el.innerHTML = `📍 <strong>${distKm.toFixed(2)} km</strong>`;
+                    if (el) el.innerHTML = `<strong>${distKm.toFixed(2)} km</strong>`;
                 });
 
                 map.setView([lat, lng], 16);

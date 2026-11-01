@@ -42,9 +42,9 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
             
             <!-- Logo & Brand -->
-            <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-bold text-lg">
-                    S
+            <a href="{{ route('home') }}" class="flex items-center gap-3 group">
+                <div class="w-9 h-9 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-bold text-xs tracking-wider shadow-sm group-hover:scale-105 transition">
+                    UIN
                 </div>
                 <div>
                     <div class="flex items-center gap-2">
@@ -54,9 +54,9 @@
                             Online
                         </span>
                     </div>
-                    <span class="text-xs text-slate-500 font-mono">bin.ihi.my.id</span>
+                    <span class="text-xs text-slate-500 font-medium">UIN Sunan Gunung Djati Bandung</span>
                 </div>
-            </div>
+            </a>
 
             <!-- Jam & Menu -->
             <div class="flex items-center gap-4">
@@ -409,7 +409,7 @@
         <div class="bg-white rounded-xl max-w-lg w-full overflow-hidden shadow-xl" onclick="event.stopPropagation()">
             <div class="p-3 border-b border-slate-200 flex items-center justify-between">
                 <h4 id="modal-title" class="font-bold text-sm text-slate-900">Detail Foto</h4>
-                <button onclick="closeLightbox()" class="text-slate-400 hover:text-slate-700 text-sm font-bold px-2 py-1">✕</button>
+                <button onclick="closeLightbox()" class="text-slate-400 hover:text-slate-700 text-base font-bold px-2 py-1">&times;</button>
             </div>
             <div class="bg-slate-100 w-full aspect-[4/3] flex items-center justify-center overflow-hidden">
                 <img id="modal-img" src="" alt="Detail" class="max-w-full max-h-full object-contain">

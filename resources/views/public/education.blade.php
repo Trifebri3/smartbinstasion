@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'Panduan Pemilahan Sampah — Smart Bin Bandung')
+@section('title', 'Panduan Pemilahan Sampah — Smart Bin UIN Bandung')
 
 @section('content')
 <div class="bg-slate-50 py-10 min-h-screen">
@@ -10,7 +10,7 @@
         <div class="text-center max-w-xl mx-auto space-y-2">
             <h1 class="text-2xl sm:text-3xl font-extrabold text-win-dark">Panduan 4 Kategori Pemilahan</h1>
             <p class="text-xs sm:text-sm text-win-slate">
-                Pilah sampah sesuai wadah sebelum memasukkan ke Smart Bin untuk menjaga kelestarian kota Bandung.
+                Pilah sampah sesuai wadah sebelum memasukkan ke Smart Bin untuk menjaga kelestarian kampus UIN & Kota Bandung.
             </p>
         </div>
 
@@ -30,18 +30,20 @@
                 <div class="space-y-2 text-xs">
                     <div>
                         <span class="font-bold text-emerald-800 flex items-center gap-1.5 mb-1">
-                            <span>✓</span> Yang Boleh Dibuang:
+                            <svg class="w-3.5 h-3.5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                            <span>Yang Boleh Dibuang:</span>
                         </span>
-                        <p class="text-slate-600 pl-4 leading-relaxed">
+                        <p class="text-slate-600 pl-5 leading-relaxed">
                             Sisa makanan, nasi, sayuran, daun gugur, kulit buah, ampas teh dan kopi.
                         </p>
                     </div>
 
                     <div class="pt-2 border-t border-slate-100">
                         <span class="font-bold text-rose-700 flex items-center gap-1.5 mb-1">
-                            <span>✕</span> Jangan Masukkan:
+                            <svg class="w-3.5 h-3.5 text-rose-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                            <span>Jangan Masukkan:</span>
                         </span>
-                        <p class="text-slate-600 pl-4 leading-relaxed">
+                        <p class="text-slate-600 pl-5 leading-relaxed">
                             Plastik kemasan makanan, styrofoam, tusuk sate, atau puntung rokok.
                         </p>
                     </div>
@@ -61,18 +63,20 @@
                 <div class="space-y-2 text-xs">
                     <div>
                         <span class="font-bold text-emerald-800 flex items-center gap-1.5 mb-1">
-                            <span>✓</span> Yang Boleh Dibuang:
+                            <svg class="w-3.5 h-3.5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                            <span>Yang Boleh Dibuang:</span>
                         </span>
-                        <p class="text-slate-600 pl-4 leading-relaxed">
+                        <p class="text-slate-600 pl-5 leading-relaxed">
                             Botol air mineral (PET), gelas plastik bersih, tutup botol, kantong kresek kering.
                         </p>
                     </div>
 
                     <div class="pt-2 border-t border-slate-100">
                         <span class="font-bold text-rose-700 flex items-center gap-1.5 mb-1">
-                            <span>✕</span> Jangan Masukkan:
+                            <svg class="w-3.5 h-3.5 text-rose-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                            <span>Jangan Masukkan:</span>
                         </span>
-                        <p class="text-slate-600 pl-4 leading-relaxed">
+                        <p class="text-slate-600 pl-5 leading-relaxed">
                             Botol yang masih terisi cairan, sachet kopi/snack berlaminasi aluminium foil tebal.
                         </p>
                     </div>
@@ -92,18 +96,20 @@
                 <div class="space-y-2 text-xs">
                     <div>
                         <span class="font-bold text-emerald-800 flex items-center gap-1.5 mb-1">
-                            <span>✓</span> Yang Boleh Dibuang:
+                            <svg class="w-3.5 h-3.5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                            <span>Yang Boleh Dibuang:</span>
                         </span>
-                        <p class="text-slate-600 pl-4 leading-relaxed">
+                        <p class="text-slate-600 pl-5 leading-relaxed">
                             Kardus box, kertas HVS dokumen, buku tulis bekas, koran, majalah, karton telur.
                         </p>
                     </div>
 
                     <div class="pt-2 border-t border-slate-100">
                         <span class="font-bold text-rose-700 flex items-center gap-1.5 mb-1">
-                            <span>✕</span> Jangan Masukkan:
+                            <svg class="w-3.5 h-3.5 text-rose-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                            <span>Jangan Masukkan:</span>
                         </span>
-                        <p class="text-slate-600 pl-4 leading-relaxed">
+                        <p class="text-slate-600 pl-5 leading-relaxed">
                             Kertas basah atau berminyak (kertas pembungkus nasi berminyak), tisu kotor.
                         </p>
                     </div>
@@ -123,18 +129,20 @@
                 <div class="space-y-2 text-xs">
                     <div>
                         <span class="font-bold text-emerald-800 flex items-center gap-1.5 mb-1">
-                            <span>✓</span> Yang Boleh Dibuang:
+                            <svg class="w-3.5 h-3.5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                            <span>Yang Boleh Dibuang:</span>
                         </span>
-                        <p class="text-slate-600 pl-4 leading-relaxed">
+                        <p class="text-slate-600 pl-5 leading-relaxed">
                             Kaleng soda/minuman aluminium, kaleng biskuit/susu, botol kaca sirup dan selai.
                         </p>
                     </div>
 
                     <div class="pt-2 border-t border-slate-100">
                         <span class="font-bold text-rose-700 flex items-center gap-1.5 mb-1">
-                            <span>✕</span> Jangan Masukkan:
+                            <svg class="w-3.5 h-3.5 text-rose-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                            <span>Jangan Masukkan:</span>
                         </span>
-                        <p class="text-slate-600 pl-4 leading-relaxed">
+                        <p class="text-slate-600 pl-5 leading-relaxed">
                             Baterai bekas, lampu neon pecah, kaleng aerosol bertekanan, atau paku tajam.
                         </p>
                     </div>
@@ -146,7 +154,11 @@
         <!-- Clean Action -->
         <div class="text-center pt-2">
             <a href="{{ route('public.locations') }}" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-win-green text-white font-bold text-xs hover:bg-win-green-dark transition shadow-sm">
-                <span>📍 Cari Smart Bin Terdekat</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                <span>Cari Smart Bin Terdekat</span>
                 <span>&rarr;</span>
             </a>
         </div>

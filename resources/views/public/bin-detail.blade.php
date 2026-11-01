@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', $bin->name . ' — Detail Smart Bin WIn Bandung')
+@section('title', $bin->name . ' — Detail Smart Bin UIN Bandung')
 
 @section('content')
 <div class="bg-slate-50 py-10 min-h-screen">
@@ -25,7 +25,7 @@
                         <span class="text-xs font-mono font-bold text-win-green bg-win-green-light px-2.5 py-0.5 rounded-md">
                             {{ $bin->station_code }}
                         </span>
-                        <span class="text-xs text-win-slate">● Stasiun Aktif Kota Bandung</span>
+                        <span class="text-xs text-win-slate">● Stasiun Aktif Kampus UIN Bandung</span>
                     </div>
                     <h1 class="text-2xl sm:text-3xl font-extrabold text-win-dark">{{ $bin->name }}</h1>
                     <p class="text-sm text-win-slate flex items-center gap-1.5 pt-1">
@@ -53,8 +53,9 @@
                         <h2 class="text-base font-bold text-win-dark">Kapasitas Sensor Ultrasonik Real-Time</h2>
                         <p class="text-xs text-win-slate">Status keterisian masing-masing kompartemen wadah</p>
                     </div>
-                    <span class="text-xs font-mono text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
-                        ⚡ ESP32 Synced
+                    <span class="text-xs font-mono text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200 flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        <span>ESP32 Synced</span>
                     </span>
                 </div>
 

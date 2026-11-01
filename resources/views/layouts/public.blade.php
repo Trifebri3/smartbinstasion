@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', 'Smart Bin — WIn Bandung')</title>
-    <meta name="description" content="Tempat sampah pintar IoT dan panduan pemilahan sampah kota Bandung.">
+    <title>@yield('title', 'Smart Bin — UIN Bandung')</title>
+    <meta name="description" content="Tempat sampah pintar IoT dan panduan pemilahan sampah kampus UIN Sunan Gunung Djati Bandung.">
 
     <!-- PWA -->
     <meta name="theme-color" content="#287A4D">
@@ -58,12 +58,12 @@
 
             <!-- LOGO: Minimal & Sleek -->
             <a href="{{ route('home') }}" class="flex items-center gap-2.5 group">
-                <div class="w-8 h-8 rounded-xl bg-win-green flex items-center justify-center text-white font-bold text-sm shadow-sm group-hover:scale-105 transition">
-                    SB
+                <div class="w-8 h-8 rounded-xl bg-win-green flex items-center justify-center text-white font-bold text-xs tracking-wider shadow-sm group-hover:scale-105 transition">
+                    UIN
                 </div>
                 <div class="flex items-center gap-1.5">
                     <span class="font-extrabold text-base tracking-tight text-win-dark">SmartBin</span>
-                    <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-win-green-light text-win-green">Bandung</span>
+                    <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-win-green-light text-win-green">UIN Bandung</span>
                 </div>
             </a>
 
@@ -85,7 +85,11 @@
             <div class="flex items-center gap-2.5">
                 @auth
                     <a href="{{ route('user.portal') }}" class="text-xs font-bold text-win-green bg-win-green-light hover:bg-emerald-100 px-3 py-1.5 rounded-lg transition flex items-center gap-1.5">
-                        <span>🪙 {{ number_format(Auth::user()->points) }}</span>
+                        <svg class="w-3.5 h-3.5 text-win-green shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="9" stroke-width="2"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7v10m-3-7h6"/>
+                        </svg>
+                        <span>{{ number_format(Auth::user()->points) }} Poin</span>
                         <span class="hidden sm:inline font-medium text-win-slate">• Dashboard</span>
                     </a>
                 @else
@@ -126,8 +130,8 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-win-green"></span>
-                <span class="font-bold text-win-dark">SmartBin Bandung</span>
-                <span>• Inovasi Pengelolaan Sampah Cerdas</span>
+                <span class="font-bold text-win-dark">SmartBin UIN Bandung</span>
+                <span>• Inovasi Pengelolaan Sampah Cerdas Kampus & Kota Bandung</span>
             </div>
             <div class="flex items-center gap-4 text-[11px]">
                 <a href="{{ route('public.locations') }}" class="hover:text-win-green">Peta</a>

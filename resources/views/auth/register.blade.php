@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Daftar Akun Baru — Smart Bin WIn Bandung</title>
+    <title>Daftar Akun Baru — Smart Bin UIN Bandung</title>
 
     <!-- Font: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,50 +38,55 @@
 </head>
 <body class="min-h-screen bg-slate-50 flex items-center justify-center p-4 sm:p-6 lg:p-8">
 
-    <div class="max-w-4xl w-full bg-white rounded-3xl border border-slate-200/80 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[620px]">
+    <div class="max-w-4xl w-full bg-white rounded-3xl border border-slate-200/80 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[600px]">
         
         <!-- LEFT PANEL: Brand Info -->
         <div class="lg:col-span-5 bg-gradient-to-br from-[#1E5C3A] to-[#287A4D] p-8 sm:p-10 text-white flex flex-col justify-between relative overflow-hidden">
             
             <div class="space-y-6 relative z-10">
                 <a href="{{ route('home') }}" class="inline-flex items-center gap-2.5">
-                    <div class="w-9 h-9 rounded-xl bg-white/15 backdrop-blur-md flex items-center justify-center font-bold text-white text-base">
-                        SB
+                    <div class="w-9 h-9 rounded-xl bg-white/15 backdrop-blur-md flex items-center justify-center font-bold text-white text-xs tracking-wider">
+                        UIN
                     </div>
                     <div>
                         <div class="font-extrabold text-base tracking-tight leading-tight">SmartBin</div>
-                        <div class="text-[10px] font-bold text-emerald-200 uppercase tracking-wider">WIn Bandung</div>
+                        <div class="text-[10px] font-bold text-emerald-200 uppercase tracking-wider">UIN Sunan Gunung Djati Bandung</div>
                     </div>
                 </a>
 
                 <div class="space-y-2 pt-4">
                     <h2 class="text-xl sm:text-2xl font-extrabold leading-snug">
-                        Bergabung Menjadi Eco-Warrior Bandung.
+                        Bergabung Menjadi Pelopor Lingkungan UIN Bandung.
                     </h2>
                     <p class="text-xs text-emerald-100/90 leading-relaxed">
                         Mulai langkah nyata memilah sampah, dapatkan QR token unik, dan kumpulkan poin setiap kali Anda menyetor sampah.
                     </p>
                 </div>
 
-                <div class="space-y-2.5 pt-2 text-xs">
-                    <div class="flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-emerald-300"></span>
-                        <span>100% Gratis dan Terbuka untuk Umum</span>
+                <div class="space-y-3 pt-2 text-xs">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-2 h-2 rounded-full bg-emerald-300"></div>
+                        <span>100% Terbuka untuk Civitas & Warga</span>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-emerald-300"></span>
-                        <span>Poin Dapat Ditukar Reward Komunitas</span>
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-2 h-2 rounded-full bg-emerald-300"></div>
+                        <span>Poin Partisipasi & Lencana Keberlanjutan</span>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-emerald-300"></span>
-                        <span>Dukungan Sensor Otomatis Stasiun Kampus</span>
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-2 h-2 rounded-full bg-emerald-300"></div>
+                        <span>Sensor Otomatis di Stasiun Kampus UIN</span>
                     </div>
                 </div>
             </div>
 
             <div class="pt-6 border-t border-white/15 text-[11px] text-emerald-200/80 relative z-10 flex items-center justify-between">
-                <span>Kota Bandung Platform</span>
-                <a href="{{ route('home') }}" class="text-white hover:underline">&larr; Beranda</a>
+                <span>Inovasi UIN SGD Bandung & DLH</span>
+                <a href="{{ route('home') }}" class="text-white hover:underline flex items-center gap-1">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    <span>Beranda</span>
+                </a>
             </div>
 
             <div class="absolute -right-16 -bottom-16 w-60 h-60 rounded-full bg-emerald-400/20 blur-2xl pointer-events-none"></div>
@@ -169,7 +174,7 @@
                 <!-- Submit Button -->
                 <button type="submit" 
                         class="w-full py-3 rounded-xl bg-win-green hover:bg-win-green-dark text-white font-bold text-xs sm:text-sm shadow-md shadow-win-green/20 hover:shadow-lg transition">
-                    Daftar Sekarang &rarr;
+                    Daftar Sekarang
                 </button>
             </form>
 

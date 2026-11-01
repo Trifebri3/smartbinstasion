@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Masuk ke Akun — Smart Bin WIn Bandung</title>
+    <title>Masuk ke Akun — Smart Bin UIN Bandung</title>
 
     <!-- Font: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,65 +38,85 @@
 </head>
 <body class="min-h-screen bg-slate-50 flex items-center justify-center p-4 sm:p-6 lg:p-8">
 
-    <div class="max-w-4xl w-full bg-white rounded-3xl border border-slate-200/80 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[580px]">
+    <div class="max-w-4xl w-full bg-white rounded-3xl border border-slate-200/80 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[560px]">
         
-        <!-- ============================================================== -->
-        <!-- LEFT PANEL: Visual Brand & Value (Visible on Desktop) -->
-        <!-- ============================================================== -->
+        <!-- LEFT PANEL: Visual Brand & Value -->
         <div class="lg:col-span-5 bg-gradient-to-br from-[#1E5C3A] to-[#287A4D] p-8 sm:p-10 text-white flex flex-col justify-between relative overflow-hidden">
             
             <div class="space-y-6 relative z-10">
                 <!-- Brand Header -->
                 <a href="{{ route('home') }}" class="inline-flex items-center gap-2.5">
-                    <div class="w-9 h-9 rounded-xl bg-white/15 backdrop-blur-md flex items-center justify-center font-bold text-white text-base">
-                        SB
+                    <div class="w-9 h-9 rounded-xl bg-white/15 backdrop-blur-md flex items-center justify-center font-bold text-white text-xs tracking-wider">
+                        UIN
                     </div>
                     <div>
                         <div class="font-extrabold text-base tracking-tight leading-tight">SmartBin</div>
-                        <div class="text-[10px] font-bold text-emerald-200 uppercase tracking-wider">WIn Bandung</div>
+                        <div class="text-[10px] font-bold text-emerald-200 uppercase tracking-wider">UIN Sunan Gunung Djati Bandung</div>
                     </div>
                 </a>
 
                 <!-- Message -->
                 <div class="space-y-2 pt-4">
                     <h2 class="text-xl sm:text-2xl font-extrabold leading-snug">
-                        Pilah Sampah, Kumpulkan Poin, Jaga Bandung.
+                        Pilah Sampah, Kumpulkan Poin, Jaga Kampus & Kota Bandung.
                     </h2>
                     <p class="text-xs text-emerald-100/90 leading-relaxed">
                         Akses fitur personal Anda untuk setor sampah di stasiun Smart Bin dan dapatkan reward daur ulang.
                     </p>
                 </div>
 
-                <!-- 3 Key Features -->
+                <!-- 3 Key Features with Professional SVG Icons (NO EMOJIS) -->
                 <div class="space-y-3 pt-2 text-xs">
-                    <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-white/10 backdrop-blur-sm">
-                        <span class="text-sm">🪙</span>
-                        <span>Akumulasi Poin Daur Ulang</span>
+                    <div class="flex items-center gap-3 p-3 rounded-xl bg-white/10 backdrop-blur-sm">
+                        <!-- SVG Coin / Points -->
+                        <div class="w-7 h-7 rounded-lg bg-white/15 flex items-center justify-center shrink-0">
+                            <svg class="w-4 h-4 text-emerald-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="9" stroke-width="2"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7v10m-3-7h6"/>
+                            </svg>
+                        </div>
+                        <span class="font-medium">Akumulasi Poin Daur Ulang</span>
                     </div>
-                    <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-white/10 backdrop-blur-sm">
-                        <span class="text-sm">📱</span>
-                        <span>Token QR Pribadi ke Mesin Fisik</span>
+
+                    <div class="flex items-center gap-3 p-3 rounded-xl bg-white/10 backdrop-blur-sm">
+                        <!-- SVG QR Code / Token -->
+                        <div class="w-7 h-7 rounded-lg bg-white/15 flex items-center justify-center shrink-0">
+                            <svg class="w-4 h-4 text-emerald-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
+                            </svg>
+                        </div>
+                        <span class="font-medium">Token QR Pribadi ke Mesin Fisik</span>
                     </div>
-                    <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-white/10 backdrop-blur-sm">
-                        <span class="text-sm">📷</span>
-                        <span>Scan Sampah AI Kamera HP</span>
+
+                    <div class="flex items-center gap-3 p-3 rounded-xl bg-white/10 backdrop-blur-sm">
+                        <!-- SVG Camera / AI Scanner -->
+                        <div class="w-7 h-7 rounded-lg bg-white/15 flex items-center justify-center shrink-0">
+                            <svg class="w-4 h-4 text-emerald-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                        </div>
+                        <span class="font-medium">Scan Sampah AI Kamera HP</span>
                     </div>
                 </div>
             </div>
 
             <!-- Bottom Note -->
             <div class="pt-6 border-t border-white/15 text-[11px] text-emerald-200/80 relative z-10 flex items-center justify-between">
-                <span>Pilot Project UIN SGD & DLH</span>
-                <a href="{{ route('home') }}" class="text-white hover:underline">&larr; Beranda</a>
+                <span>Inovasi UIN SGD Bandung & DLH</span>
+                <a href="{{ route('home') }}" class="text-white hover:underline flex items-center gap-1">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    <span>Beranda</span>
+                </a>
             </div>
 
             <!-- Ambient Glow -->
             <div class="absolute -right-16 -bottom-16 w-60 h-60 rounded-full bg-emerald-400/20 blur-2xl pointer-events-none"></div>
         </div>
 
-        <!-- ============================================================== -->
         <!-- RIGHT PANEL: Clean & Seamless Login Form -->
-        <!-- ============================================================== -->
         <div class="lg:col-span-7 p-8 sm:p-10 flex flex-col justify-center space-y-6">
             
             <div class="space-y-1">
@@ -104,14 +124,13 @@
                 <p class="text-xs text-slate-500">Gunakan akun Google Anda atau masuk dengan email terdaftar.</p>
             </div>
 
-            <!-- Session Status / Alert -->
             @if (session('status'))
                 <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800">
                     {{ session('status') }}
                 </div>
             @endif
 
-            <!-- 1. Google OAuth Button (Full Width, Crisp & Prominent) -->
+            <!-- 1. Google OAuth Button -->
             <div>
                 <a href="{{ route('auth.google') }}" 
                    class="w-full flex items-center justify-center gap-3 bg-white border border-slate-300 hover:border-slate-400 hover:bg-slate-50 text-slate-700 font-bold py-3 px-4 rounded-xl shadow-sm hover:shadow transition">
@@ -175,14 +194,13 @@
                     </label>
                 </div>
 
-                <!-- Primary Submit Button -->
+                <!-- Submit Button -->
                 <button type="submit" 
                         class="w-full py-3 rounded-xl bg-win-green hover:bg-win-green-dark text-white font-bold text-xs sm:text-sm shadow-md shadow-win-green/20 hover:shadow-lg transition">
                     Masuk ke Akun
                 </button>
             </form>
 
-            <!-- Bottom Footer Link -->
             <div class="pt-2 text-center text-xs text-slate-500">
                 <span>Belum punya akun?</span>
                 <a href="{{ route('register') }}" class="font-bold text-win-green hover:underline ml-1">

@@ -22,19 +22,22 @@
     <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 px-4 py-3">
         <div class="max-w-2xl mx-auto flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-600 to-emerald-500 flex items-center justify-center font-black text-white text-lg shadow-lg shadow-cyan-950/40">
-                    SB
-                </div>
+                <a href="{{ route('home') }}" class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-emerald-500 flex items-center justify-center font-black text-white text-xs tracking-wider shadow-lg shadow-emerald-950/40">
+                    UIN
+                </a>
                 <div>
-                    <h1 class="text-sm font-bold text-white tracking-wide">SmartBin User Portal</h1>
-                    <p class="text-[11px] text-emerald-400 font-medium">● Online • smartbin.myoin.id</p>
+                    <h1 class="text-sm font-bold text-white tracking-wide">SmartBin UIN Bandung</h1>
+                    <p class="text-[11px] text-emerald-400 font-medium">● Online • Portal Civitas</p>
                 </div>
             </div>
 
             <!-- Profile & Points Pill -->
             <div class="flex items-center gap-2">
                 <div class="bg-gradient-to-r from-amber-500/20 to-emerald-500/20 border border-amber-500/40 px-3 py-1 rounded-full flex items-center gap-1.5 shadow-sm">
-                    <span class="text-xs">🪙</span>
+                    <svg class="w-3.5 h-3.5 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="9" stroke-width="2"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7v10m-3-7h6"/>
+                    </svg>
                     <span class="text-xs font-bold text-amber-300" id="header-user-points">{{ number_format($user->points) }}</span>
                     <span class="text-[10px] text-slate-400">Poin</span>
                 </div>
@@ -93,7 +96,8 @@
             <div class="flex items-center justify-between">
                 <div>
                     <h3 class="text-base font-bold text-white flex items-center gap-2">
-                        <span>📍</span> Titik SmartBin Terdekat
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        <span>Titik SmartBin Terdekat</span>
                     </h3>
                     <p class="text-xs text-slate-400">Lokasi wadah sampah pintar & ketersediaan kapasitas</p>
                 </div>
@@ -186,8 +190,9 @@
 
             <!-- Panduan Langkah Store Sampah -->
             <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 space-y-3">
-                <h4 class="text-xs font-bold uppercase tracking-wide text-cyan-400 flex items-center gap-1.5">
-                    <span>💡</span> Cara Store Sampah & Dapatkan Poin:
+                <h4 class="text-xs font-bold uppercase tracking-wide text-emerald-400 flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span>Cara Setor Sampah & Dapatkan Poin:</span>
                 </h4>
                 <ol class="text-xs text-slate-300 space-y-2 list-decimal list-inside leading-relaxed">
                     <li><strong class="text-white">Scan QR:</strong> Arahkan kode QR di atas ke kamera SmartBin.</li>
@@ -204,7 +209,8 @@
         <section id="tab-scan" class="tab-content space-y-4">
             <div>
                 <h3 class="text-base font-bold text-white flex items-center gap-2">
-                    <span>📷</span> Scan Sampah via Kamera HP
+                    <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    <span>Scan Sampah via Kamera HP</span>
                 </h3>
                 <p class="text-xs text-slate-400">Pindai sampah Anda untuk mengetahui jenis, wadah tujuan & poinnya</p>
             </div>
@@ -274,7 +280,8 @@
         <section id="tab-edukasi" class="tab-content space-y-4">
             <div>
                 <h3 class="text-base font-bold text-white flex items-center gap-2">
-                    <span>📖</span> Edukasi Pemilahan & Ekoteologi Islam
+                    <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                    <span>Edukasi Pemilahan & Ekoteologi Islam</span>
                 </h3>
                 <p class="text-xs text-slate-400">Panduan peduli lingkungan berlandaskan nilai keislaman</p>
             </div>
@@ -295,7 +302,8 @@
 
                     <div class="bg-slate-950/70 rounded-xl p-3 border border-slate-800/60 text-xs space-y-1.5">
                         <div class="text-emerald-400 font-semibold flex items-center gap-1.5">
-                            <span>🌱</span> Dampak Daur Ulang:
+                            <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+                            <span>Dampak Daur Ulang:</span>
                         </div>
                         <p class="text-slate-300 text-[11px]">{{ $edu->recycling_impact }}</p>
                     </div>
@@ -316,7 +324,8 @@
         <section id="tab-riwayat" class="tab-content space-y-4">
             <div>
                 <h3 class="text-base font-bold text-white flex items-center gap-2">
-                    <span>📜</span> Riwayat Setoran & Poin
+                    <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    <span>Riwayat Setoran & Poin</span>
                 </h3>
                 <p class="text-xs text-slate-400">Catatan transaksi setoran sampah Anda di SmartBin</p>
             </div>
@@ -455,7 +464,7 @@
                                 <p class="text-xs text-slate-400 mt-0.5">${st.location_name}</p>
                             </div>
                             <span class="text-xs font-bold text-amber-300 bg-amber-950/40 border border-amber-800/40 px-2 py-1 rounded-lg">
-                                📍 ${st.distance_text}
+                                ${st.distance_text}
                             </span>
                         </div>
                     </div>
