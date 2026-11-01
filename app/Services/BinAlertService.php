@@ -96,7 +96,11 @@ class BinAlertService
             );
 
             // Simpan cooldown 30 menit
-            Cache::put($cacheKey, now()->toIso8601String(), now()->addMinutes(self::COOLDOWN_MINUTES));
+            try {
+                Cache::put($cacheKey, now()->toIso8601String(), now()->addMinutes(self::COOLDOWN_MINUTES));
+            } catch (\Throwable $ce) {
+                // Ignore cache storage error
+            }
 
             Log::info("SmartBin Alert Email sent for {$binData['name']} ({$binData['station_code']}) to " . implode(', ', $recipients));
 
