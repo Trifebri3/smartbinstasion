@@ -15,7 +15,17 @@ class EnsureUserIsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!$request->user() || !$request->user()->isAdmin()) {
+        if (!$request->user()) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'status' => 'unauthenticated',
+                    'message' => 'Silakan masuk terlebih dahulu.'
+                ], 401);
+            }
+            return redirect()->route('login');
+        }
+
+        if (!$request->user()->isAdmin()) {
             if ($request->expectsJson()) {
                 return response()->json([
                     'status' => 'forbidden',

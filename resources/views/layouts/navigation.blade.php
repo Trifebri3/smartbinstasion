@@ -80,10 +80,10 @@
                     <button @click="dropdownOpen = !dropdownOpen" 
                             class="inline-flex items-center gap-2 p-1.5 pr-3 rounded-xl border border-slate-200/80 hover:border-win-green bg-white shadow-sm transition">
                         <div class="w-8 h-8 rounded-lg bg-win-green text-white font-bold text-xs flex items-center justify-center">
-                            {{ strtoupper(substr(Auth::user()->name ?? 'A', 0, 1)) }}
+                            {{ strtoupper(substr(Auth::user()?->name ?? 'A', 0, 1)) }}
                         </div>
                         <div class="text-left hidden lg:block">
-                            <div class="text-xs font-bold text-win-dark truncate max-w-[120px]">{{ Auth::user()->name }}</div>
+                            <div class="text-xs font-bold text-win-dark truncate max-w-[120px]">{{ Auth::user()?->name ?? 'Admin UIN' }}</div>
                             <div class="text-[10px] text-win-green font-semibold">Administrator UIN</div>
                         </div>
                         <svg class="w-4 h-4 text-slate-400 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -104,14 +104,14 @@
                         
                         <!-- Account Details Card -->
                         <div class="px-4 py-3 border-b border-slate-100">
-                            <div class="font-extrabold text-sm text-win-dark">{{ Auth::user()->name }}</div>
-                            <div class="text-slate-500 text-[11px] truncate">{{ Auth::user()->email }}</div>
+                            <div class="font-extrabold text-sm text-win-dark">{{ Auth::user()?->name ?? 'Administrator UIN' }}</div>
+                            <div class="text-slate-500 text-[11px] truncate">{{ Auth::user()?->email ?? 'admin@smartbin.myoin.id' }}</div>
                             <div class="mt-2 flex items-center justify-between text-[10px]">
                                 <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 font-bold border border-emerald-200">
                                     Super Admin UIN
                                 </span>
                                 <code class="font-mono text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded">
-                                    {{ Auth::user()->qr_code_token ?? 'SB-ADM' }}
+                                    {{ Auth::user()?->qr_code_token ?? 'SB-ADM-MASTER99' }}
                                 </code>
                             </div>
                         </div>
@@ -159,8 +159,8 @@
         <!-- User Info Header -->
         <div class="p-3 bg-slate-50 rounded-xl flex items-center justify-between">
             <div>
-                <div class="font-extrabold text-sm text-win-dark">{{ Auth::user()->name }}</div>
-                <div class="text-[11px] text-slate-500">{{ Auth::user()->email }}</div>
+                <div class="font-extrabold text-sm text-win-dark">{{ Auth::user()?->name ?? 'Administrator UIN' }}</div>
+                <div class="text-[11px] text-slate-500">{{ Auth::user()?->email ?? 'admin@smartbin.myoin.id' }}</div>
             </div>
             <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-win-green text-white">Admin UIN</span>
         </div>

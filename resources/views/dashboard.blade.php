@@ -30,19 +30,19 @@
                     </div>
                     <div>
                         <div class="flex items-center gap-2 flex-wrap">
-                            <h3 class="text-base font-extrabold text-win-dark">{{ Auth::user()->name }}</h3>
+                            <h3 class="text-base font-extrabold text-win-dark">{{ Auth::user()?->name ?? 'Administrator UIN Bandung' }}</h3>
                             <span class="bg-win-green-light border border-emerald-200 text-win-green text-[10px] font-bold px-2 py-0.5 rounded-full">
                                 Super Administrator
                             </span>
                         </div>
-                        <p class="text-xs text-slate-500 mt-0.5">{{ Auth::user()->email }} • Akses Penuh Mesin & Telemetri</p>
+                        <p class="text-xs text-slate-500 mt-0.5">{{ Auth::user()?->email ?? 'admin@smartbin.myoin.id' }} • Akses Penuh Mesin & Telemetri</p>
                     </div>
                 </div>
 
                 <div class="flex flex-wrap items-center gap-2 w-full md:w-auto pt-2 md:pt-0 border-t md:border-t-0 border-slate-100">
                     <div class="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs flex items-center gap-2">
                         <span class="text-slate-500 font-medium text-[11px]">Token Master QR:</span>
-                        <code class="font-mono font-bold text-win-green">{{ Auth::user()->qr_code_token ?? 'SB-ADM-MASTER99' }}</code>
+                        <code class="font-mono font-bold text-win-green">{{ Auth::user()?->qr_code_token ?? 'SB-ADM-MASTER99' }}</code>
                     </div>
 
                     <a href="{{ route('profile.edit') }}" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition flex items-center gap-1.5 shadow-sm">
