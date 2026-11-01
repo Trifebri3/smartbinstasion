@@ -1,129 +1,152 @@
 @extends('layouts.public')
 
-@section('title', 'Pusat Edukasi Pemilahan Sampah & Lingkungan — WIn Bandung')
+@section('title', 'Panduan Pemilahan Sampah — Smart Bin Bandung')
 
 @section('content')
-<div class="bg-slate-50 py-12 min-h-screen">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+<div class="bg-slate-50 py-10 min-h-screen">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 space-y-8">
 
-        <!-- Header -->
-        <div class="text-center max-w-3xl mx-auto space-y-3">
-            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-win-green-light border border-win-green/20 text-win-green text-xs font-bold tracking-wide">
-                <span>🌱 EDUCATION CENTER</span>
-                <span>•</span>
-                <span>WIn Bandung</span>
-            </div>
-            <h1 class="text-3xl sm:text-4xl font-extrabold text-win-dark">Pusat Edukasi Pemilahan Sampah & Ekoteologi</h1>
-            <p class="text-sm sm:text-base text-win-slate leading-relaxed">
-                Pelajari panduan memilah 4 kategori sampah, prinsip keberlanjutan sirkular, dan nilai-nilai etika menjaga kelestarian bumi untuk generasi masa depan.
+        <!-- Minimal Header -->
+        <div class="text-center max-w-xl mx-auto space-y-2">
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-win-dark">Panduan 4 Kategori Pemilahan</h1>
+            <p class="text-xs sm:text-sm text-win-slate">
+                Pilah sampah sesuai wadah sebelum memasukkan ke Smart Bin untuk menjaga kelestarian kota Bandung.
             </p>
         </div>
 
-        <!-- 4 Kategori Pemilahan Detail Cards -->
-        <div class="space-y-6">
-            @foreach($materials as $mat)
-                @php
-                    $theme = match($mat->category) {
-                        'organik' => ['border' => 'border-emerald-300', 'bg' => 'bg-emerald-50/70', 'badge' => 'bg-emerald-600', 'text' => 'text-emerald-900', 'subtext' => 'text-emerald-800', 'badge_text' => 'Wadah Hijau'],
-                        'plastik' => ['border' => 'border-amber-300', 'bg' => 'bg-amber-50/70', 'badge' => 'bg-amber-500', 'text' => 'text-amber-900', 'subtext' => 'text-amber-800', 'badge_text' => 'Wadah Kuning'],
-                        'kertas' => ['border' => 'border-blue-300', 'bg' => 'bg-blue-50/70', 'badge' => 'bg-blue-600', 'text' => 'text-blue-900', 'subtext' => 'text-blue-800', 'badge_text' => 'Wadah Biru'],
-                        default => ['border' => 'border-rose-300', 'bg' => 'bg-rose-50/70', 'badge' => 'bg-rose-600', 'text' => 'text-rose-900', 'subtext' => 'text-rose-800', 'badge_text' => 'Wadah Merah / Abu'],
-                    };
-                @endphp
-
-                <div class="bg-white rounded-3xl border {{ $theme['border'] }} p-6 sm:p-8 shadow-sm space-y-6">
-                    
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
-                        <div class="flex items-center gap-3">
-                            <span class="w-10 h-10 rounded-2xl {{ $theme['badge'] }} text-white flex items-center justify-center font-bold text-lg shadow-sm">
-                                @if($mat->category === 'organik') 🍃
-                                @elseif($mat->category === 'plastik') 🥤
-                                @elseif($mat->category === 'kertas') 📦
-                                @else 🥫
-                                @endif
-                            </span>
-                            <div>
-                                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500">{{ $theme['badge_text'] }} • KATEGORI {{ strtoupper($mat->category) }}</span>
-                                <h2 class="text-xl sm:text-2xl font-bold text-win-dark">{{ $mat->title }}</h2>
-                            </div>
-                        </div>
-
-                        <span class="px-3 py-1 rounded-full text-xs font-bold text-white {{ $theme['badge'] }} self-start sm:self-auto">
-                            Daur Ulang Tinggi
-                        </span>
-                    </div>
-
-                    <p class="text-sm text-win-slate leading-relaxed">
-                        {{ $mat->summary }}
-                    </p>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                        <!-- Panduan Pilah -->
-                        <div class="{{ $theme['bg'] }} p-4 rounded-2xl border border-white space-y-2">
-                            <h3 class="font-bold {{ $theme['text'] }} flex items-center gap-1.5">
-                                <span>📋</span> Panduan Pemilahan yang Benar
-                            </h3>
-                            <p class="{{ $theme['subtext'] }} leading-relaxed">
-                                {{ $mat->sorting_guide }}
-                            </p>
-                        </div>
-
-                        <!-- Dampak Daur Ulang -->
-                        <div class="{{ $theme['bg'] }} p-4 rounded-2xl border border-white space-y-2">
-                            <h3 class="font-bold {{ $theme['text'] }} flex items-center gap-1.5">
-                                <span>🔄</span> Manfaat & Dampak Daur Ulang
-                            </h3>
-                            <p class="{{ $theme['subtext'] }} leading-relaxed">
-                                {{ $mat->recycling_impact }}
-                            </p>
-                        </div>
-                    </div>
-
-                    @if($mat->eco_theology_quote)
-                        <!-- Pesan Ekoteologi & Etika Lingkungan -->
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 space-y-1 text-xs">
-                            <div class="text-[11px] font-bold text-win-green uppercase tracking-wide">
-                                🌿 Nilai Ekoteologi & Kelestarian Bumi ({{ $mat->eco_theology_ref }})
-                            </div>
-                            <blockquote class="italic text-win-dark font-medium">
-                                "{{ $mat->eco_theology_quote }}"
-                            </blockquote>
-                        </div>
-                    @endif
-
-                </div>
-            @endforeach
-        </div>
-
-        <!-- 3R Tips Box -->
-        <div class="bg-white rounded-3xl border border-win-neutral p-8 shadow-sm space-y-6">
-            <h2 class="text-xl sm:text-2xl font-bold text-win-dark">Prinsip 3R Sehari-Hari untuk Warga Bandung</h2>
+        <!-- 4 Actionable Cards (Clean Do's & Don'ts) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
             
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs text-win-slate leading-relaxed">
-                <div class="space-y-2 bg-slate-50 p-5 rounded-2xl border border-slate-200">
-                    <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 font-extrabold flex items-center justify-center text-sm">1</div>
-                    <h3 class="font-bold text-sm text-win-dark">Reduce (Kurangi)</h3>
-                    <p>Bawa tumbler dan tas belanja kain sendiri. Batasi pemakaian wadah sekali pakai saat berbelanja di pasar maupun supermarket Bandung.</p>
+            <!-- 1. Organik -->
+            <div class="bg-white rounded-2xl border border-emerald-200 p-6 shadow-sm space-y-4">
+                <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-3 h-3 rounded-full bg-emerald-600"></span>
+                        <h2 class="text-base font-bold text-win-dark">Wadah Hijau: ORGANIK</h2>
+                    </div>
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-800">Kompos & Pakan</span>
                 </div>
 
-                <div class="space-y-2 bg-slate-50 p-5 rounded-2xl border border-slate-200">
-                    <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-800 font-extrabold flex items-center justify-center text-sm">2</div>
-                    <h3 class="font-bold text-sm text-win-dark">Reuse (Gunakan Kembali)</h3>
-                    <p>Manfaatkan kardus dan botol kaca bekas untuk penyimpanan barang, pot tanaman hias, atau wadah serbaguna sebelum dibuang.</p>
-                </div>
+                <div class="space-y-2 text-xs">
+                    <div>
+                        <span class="font-bold text-emerald-800 flex items-center gap-1.5 mb-1">
+                            <span>✓</span> Yang Boleh Dibuang:
+                        </span>
+                        <p class="text-slate-600 pl-4 leading-relaxed">
+                            Sisa makanan, nasi, sayuran, daun gugur, kulit buah, ampas teh dan kopi.
+                        </p>
+                    </div>
 
-                <div class="space-y-2 bg-slate-50 p-5 rounded-2xl border border-slate-200">
-                    <div class="w-8 h-8 rounded-lg bg-blue-100 text-blue-800 font-extrabold flex items-center justify-center text-sm">3</div>
-                    <h3 class="font-bold text-sm text-win-dark">Recycle (Daur Ulang)</h3>
-                    <p>Setorkan sampah terpilah Anda ke stasiun Smart Bin terdekat agar diproses kembali menjadi bahan baku bernilai ekonomis tinggi.</p>
+                    <div class="pt-2 border-t border-slate-100">
+                        <span class="font-bold text-rose-700 flex items-center gap-1.5 mb-1">
+                            <span>✕</span> Jangan Masukkan:
+                        </span>
+                        <p class="text-slate-600 pl-4 leading-relaxed">
+                            Plastik kemasan makanan, styrofoam, tusuk sate, atau puntung rokok.
+                        </p>
+                    </div>
                 </div>
             </div>
+
+            <!-- 2. Plastik -->
+            <div class="bg-white rounded-2xl border border-amber-200 p-6 shadow-sm space-y-4">
+                <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                        <h2 class="text-base font-bold text-win-dark">Wadah Kuning: PLASTIK</h2>
+                    </div>
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800">Daur Ulang Tinggi</span>
+                </div>
+
+                <div class="space-y-2 text-xs">
+                    <div>
+                        <span class="font-bold text-emerald-800 flex items-center gap-1.5 mb-1">
+                            <span>✓</span> Yang Boleh Dibuang:
+                        </span>
+                        <p class="text-slate-600 pl-4 leading-relaxed">
+                            Botol air mineral (PET), gelas plastik bersih, tutup botol, kantong kresek kering.
+                        </p>
+                    </div>
+
+                    <div class="pt-2 border-t border-slate-100">
+                        <span class="font-bold text-rose-700 flex items-center gap-1.5 mb-1">
+                            <span>✕</span> Jangan Masukkan:
+                        </span>
+                        <p class="text-slate-600 pl-4 leading-relaxed">
+                            Botol yang masih terisi cairan, sachet kopi/snack berlaminasi aluminium foil tebal.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Kertas -->
+            <div class="bg-white rounded-2xl border border-blue-200 p-6 shadow-sm space-y-4">
+                <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-3 h-3 rounded-full bg-blue-600"></span>
+                        <h2 class="text-base font-bold text-win-dark">Wadah Biru: KERTAS</h2>
+                    </div>
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-800">Penyelamat Pohon</span>
+                </div>
+
+                <div class="space-y-2 text-xs">
+                    <div>
+                        <span class="font-bold text-emerald-800 flex items-center gap-1.5 mb-1">
+                            <span>✓</span> Yang Boleh Dibuang:
+                        </span>
+                        <p class="text-slate-600 pl-4 leading-relaxed">
+                            Kardus box, kertas HVS dokumen, buku tulis bekas, koran, majalah, karton telur.
+                        </p>
+                    </div>
+
+                    <div class="pt-2 border-t border-slate-100">
+                        <span class="font-bold text-rose-700 flex items-center gap-1.5 mb-1">
+                            <span>✕</span> Jangan Masukkan:
+                        </span>
+                        <p class="text-slate-600 pl-4 leading-relaxed">
+                            Kertas basah atau berminyak (kertas pembungkus nasi berminyak), tisu kotor.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Logam -->
+            <div class="bg-white rounded-2xl border border-rose-200 p-6 shadow-sm space-y-4">
+                <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                        <h2 class="text-base font-bold text-win-dark">Wadah Merah: LOGAM & KACA</h2>
+                    </div>
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-rose-50 text-rose-800">Daur Ulang Tanpa Batas</span>
+                </div>
+
+                <div class="space-y-2 text-xs">
+                    <div>
+                        <span class="font-bold text-emerald-800 flex items-center gap-1.5 mb-1">
+                            <span>✓</span> Yang Boleh Dibuang:
+                        </span>
+                        <p class="text-slate-600 pl-4 leading-relaxed">
+                            Kaleng soda/minuman aluminium, kaleng biskuit/susu, botol kaca sirup dan selai.
+                        </p>
+                    </div>
+
+                    <div class="pt-2 border-t border-slate-100">
+                        <span class="font-bold text-rose-700 flex items-center gap-1.5 mb-1">
+                            <span>✕</span> Jangan Masukkan:
+                        </span>
+                        <p class="text-slate-600 pl-4 leading-relaxed">
+                            Baterai bekas, lampu neon pecah, kaleng aerosol bertekanan, atau paku tajam.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <!-- Call to Action -->
-        <div class="text-center pt-4">
-            <a href="{{ route('public.locations') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-win-green text-white font-bold text-sm hover:bg-win-green-dark shadow-md transition">
-                <span>📍 Temukan Smart Bin Terdekat Sekarang</span>
+        <!-- Clean Action -->
+        <div class="text-center pt-2">
+            <a href="{{ route('public.locations') }}" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-win-green text-white font-bold text-xs hover:bg-win-green-dark transition shadow-sm">
+                <span>📍 Cari Smart Bin Terdekat</span>
                 <span>&rarr;</span>
             </a>
         </div>
@@ -131,4 +154,3 @@
     </div>
 </div>
 @endsection
-

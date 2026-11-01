@@ -3,18 +3,16 @@
 @section('title', 'Peta Lokasi Smart Bin — WIn Bandung')
 
 @push('styles')
-<!-- Leaflet CSS (CDN Cloudflare stabil & bebas hambatan SRI) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
 <style>
     #map {
-        height: 580px;
+        height: 600px;
         width: 100%;
-        z-index: 10;
-        border-radius: 1.25rem;
+        border-radius: 1rem;
     }
     @media (max-width: 768px) {
         #map {
-            height: 400px;
+            height: 380px;
         }
     }
     .custom-bin-marker {
@@ -23,108 +21,81 @@
         justify-content: center;
         border-radius: 9999px;
         border: 2px solid white;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
         color: white;
         font-weight: bold;
         font-size: 13px;
-        transition: transform 0.2s;
-    }
-    .custom-bin-marker:hover {
-        transform: scale(1.15);
     }
 </style>
 @endpush
 
 @section('content')
-<div class="bg-slate-50 py-8 min-h-screen">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+<div class="bg-slate-50 py-6 min-h-[calc(100vh-8rem)]">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 space-y-4">
 
-        <!-- Top Header & GPS Trigger -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-win-neutral shadow-sm">
+        <!-- COMPACT CONTROL BAR -->
+        <div class="bg-white p-4 rounded-2xl border border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm">
             <div>
-                <div class="inline-flex items-center gap-1.5 text-xs font-bold text-win-green mb-1">
-                    <span class="w-2 h-2 rounded-full bg-win-green"></span>
-                    <span>LOCATION DISCOVERY</span>
-                </div>
-                <h1 class="text-2xl sm:text-3xl font-extrabold text-win-dark">Peta Lokasi Smart Bin se-Bandung</h1>
-                <p class="text-xs sm:text-sm text-win-slate mt-0.5">
-                    Temukan wadah sampah pintar terdekat dan periksa ketersediaan kapasitas secara real-time.
-                </p>
+                <h1 class="text-base sm:text-lg font-extrabold text-win-dark">Peta Titik Smart Bin</h1>
+                <p class="text-xs text-slate-500">Cek keterisian wadah dan temukan yang terdekat</p>
             </div>
 
-            <!-- Tombol GPS Geolocation -->
-            <button onclick="detectUserLocation()" id="btn-gps" class="px-5 py-3 rounded-xl bg-win-green hover:bg-win-green-dark text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 shrink-0">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                </svg>
-                <span id="btn-gps-text">Pindai Lokasi Terdekat Saya</span>
-            </button>
+            <div class="flex items-center gap-2">
+                <button onclick="detectUserLocation()" id="btn-gps" class="px-3.5 py-2 rounded-xl bg-win-green hover:bg-win-green-dark text-white font-bold text-xs shadow-sm transition flex items-center gap-1.5 shrink-0">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                    </svg>
+                    <span id="btn-gps-text">Lokasi Saya</span>
+                </button>
+            </div>
         </div>
 
-        <!-- Notification GPS Info -->
-        <div id="gps-status-box" class="hidden p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-center justify-between">
-            <span id="gps-status-text">Mendeteksi koordinat GPS Anda...</span>
-            <button onclick="document.getElementById('gps-status-box').classList.add('hidden')" class="font-bold text-emerald-900">&times;</button>
+        <!-- Notification GPS -->
+        <div id="gps-status-box" class="hidden p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-center justify-between">
+            <span id="gps-status-text">Mendeteksi koordinat GPS...</span>
+            <button onclick="document.getElementById('gps-status-box').classList.add('hidden')" class="font-bold">&times;</button>
         </div>
 
-        <!-- Grid Layout: Peta (Kiri/Utama) & Daftar List (Kanan) -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- MAIN SPLIT: MAP (Left) & CARDS (Right) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
             
-            <!-- Map Container (8 Cols on desktop) -->
-            <div class="lg:col-span-8 bg-white p-3 rounded-3xl border border-win-neutral shadow-sm">
-                
-                <!-- Map Legend Bar -->
-                <div class="flex items-center justify-between px-3 py-2 text-[11px] text-win-slate border-b border-slate-100 mb-2">
-                    <div class="flex items-center gap-4">
-                        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-600"></span> Tersedia</span>
-                        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> Hampir Penuh</span>
-                        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> Penuh</span>
-                        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-slate-400"></span> Offline</span>
-                    </div>
-                    <span class="hidden sm:inline font-mono text-[10px]">CARTO Voyager • OpenStreetMap • Leaflet</span>
-                </div>
-
+            <!-- Map Container (7 cols) -->
+            <div class="lg:col-span-7 bg-white p-2 rounded-2xl border border-slate-200 shadow-sm relative">
                 <div id="map"></div>
             </div>
 
-            <!-- List of Smart Bins with Filter (4 Cols) -->
-            <div class="lg:col-span-4 space-y-4">
+            <!-- List of Bins (5 cols) -->
+            <div class="lg:col-span-5 space-y-3">
                 
-                <!-- Search & Filter Card -->
-                <div class="bg-white p-4 rounded-2xl border border-win-neutral shadow-sm space-y-3">
-                    <div class="relative">
-                        <input type="text" id="input-search" oninput="filterStations()" placeholder="Cari nama atau gedung..." 
-                               class="w-full pl-9 pr-4 py-2 text-xs rounded-xl border border-win-neutral focus:border-win-green focus:ring-1 focus:ring-win-green outline-none">
-                        <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                        </svg>
-                    </div>
-
-                    <!-- Filter Status Buttons -->
-                    <div class="flex flex-wrap gap-1.5 text-[11px] font-bold">
-                        <button onclick="setFilterStatus('all')" id="flt-all" class="px-2.5 py-1 rounded-lg bg-win-green text-white filter-btn transition">Semua</button>
-                        <button onclick="setFilterStatus('tersedia')" id="flt-tersedia" class="px-2.5 py-1 rounded-lg bg-slate-100 text-win-slate hover:bg-slate-200 filter-btn transition">Tersedia</button>
-                        <button onclick="setFilterStatus('hampir_penuh')" id="flt-hampir" class="px-2.5 py-1 rounded-lg bg-slate-100 text-win-slate hover:bg-slate-200 filter-btn transition">Hampir Penuh</button>
-                        <button onclick="setFilterStatus('penuh')" id="flt-penuh" class="px-2.5 py-1 rounded-lg bg-slate-100 text-win-slate hover:bg-slate-200 filter-btn transition">Penuh</button>
+                <!-- Quick Filter & Search -->
+                <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                    <input type="text" id="input-search" oninput="filterStations()" placeholder="Cari nama lokasi..." 
+                           class="w-full px-3 py-1.5 text-xs rounded-lg border border-slate-200 focus:border-win-green outline-none">
+                    
+                    <div class="flex gap-1.5 text-[11px] font-bold">
+                        <button onclick="setFilterStatus('all')" id="flt-all" class="px-2.5 py-1 rounded bg-win-green text-white filter-btn transition">Semua</button>
+                        <button onclick="setFilterStatus('tersedia')" id="flt-tersedia" class="px-2.5 py-1 rounded bg-slate-100 text-slate-600 hover:bg-slate-200 filter-btn transition">Tersedia</button>
+                        <button onclick="setFilterStatus('hampir_penuh')" id="flt-hampir" class="px-2.5 py-1 rounded bg-slate-100 text-slate-600 hover:bg-slate-200 filter-btn transition">Hampir Penuh</button>
+                        <button onclick="setFilterStatus('penuh')" id="flt-penuh" class="px-2.5 py-1 rounded bg-slate-100 text-slate-600 hover:bg-slate-200 filter-btn transition">Penuh</button>
                     </div>
                 </div>
 
-                <!-- Station Cards List -->
-                <div id="station-list-container" class="space-y-3 max-h-[480px] overflow-y-auto pr-1">
+                <!-- Cards Scroll Container -->
+                <div id="station-list-container" class="space-y-2.5 max-h-[500px] overflow-y-auto pr-1">
                     @foreach($smartBins as $bin)
                         @php
                             $status = $bin->getPublicStatus();
+                            $avgCap = round(($bin->capacity_organik + $bin->capacity_plastik + $bin->capacity_kertas + $bin->capacity_logam) / 4);
                         @endphp
-                        <div class="station-card bg-white p-4 rounded-2xl border border-win-neutral hover:border-win-green transition-all shadow-sm cursor-pointer"
+                        <div class="station-card bg-white p-3.5 rounded-xl border border-slate-200 hover:border-win-green transition shadow-sm cursor-pointer space-y-2"
                              data-id="{{ $bin->id }}"
                              data-name="{{ strtolower($bin->name) }}"
                              data-loc="{{ strtolower($bin->location_name) }}"
                              data-status="{{ $status['status'] }}"
                              onclick="focusMarker({{ $bin->id }}, {{ $bin->latitude }}, {{ $bin->longitude }})">
                             
-                            <div class="flex items-center justify-between mb-2">
-                                <span class="text-[10px] font-mono font-bold text-win-green bg-win-green-light px-2 py-0.5 rounded">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[10px] font-mono font-bold text-win-green bg-win-green-light px-1.5 py-0.5 rounded">
                                     {{ $bin->station_code }}
                                 </span>
                                 <span class="text-[10px] font-bold px-2 py-0.5 rounded-full {{ $status['bg'] }}">
@@ -132,21 +103,38 @@
                                 </span>
                             </div>
 
-                            <h3 class="text-sm font-bold text-win-dark">{{ $bin->name }}</h3>
-                            <p class="text-xs text-win-slate mt-0.5 line-clamp-1">{{ $bin->location_name }}</p>
+                            <div>
+                                <h3 class="text-xs font-bold text-win-dark">{{ $bin->name }}</h3>
+                                <p class="text-[11px] text-slate-500 line-clamp-1">{{ $bin->location_name }}</p>
+                            </div>
 
-                            <!-- Distance Badge -->
-                            <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px]">
-                                <span class="text-slate-500 distance-text" id="distance-{{ $bin->id }}">
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-[10px] text-slate-500">
+                                    <span>Kapasitas:</span>
+                                    <span class="font-bold text-win-dark">{{ $avgCap }}%</span>
+                                </div>
+                                <div class="w-full bg-slate-100 rounded-full h-1 overflow-hidden">
+                                    <div class="h-1 rounded-full" style="width: {{ $avgCap }}%; background-color: {{ $status['color'] }}"></div>
+                                </div>
+                            </div>
+
+                            <div class="pt-1.5 border-t border-slate-100 flex items-center justify-between text-[11px]">
+                                <span class="text-slate-400" id="distance-{{ $bin->id }}">
                                     @if(isset($bin->distance_km))
-                                        📍 {{ $bin->distance_km }} km dari Anda
+                                        📍 {{ $bin->distance_km }} km
                                     @else
-                                        📍 Klik GPS untuk jarak
+                                        📍 Klik GPS
                                     @endif
                                 </span>
-                                <a href="{{ route('public.bin-detail', $bin->id) }}" class="font-bold text-win-green hover:underline">
-                                    Detail &rarr;
-                                </a>
+                                <div class="flex items-center gap-2">
+                                    <a href="https://www.google.com/maps/search/?api=1&query={{ $bin->latitude }},{{ $bin->longitude }}" target="_blank" onclick="event.stopPropagation()" class="text-slate-500 hover:text-win-green">
+                                        Rute Maps
+                                    </a>
+                                    <span>•</span>
+                                    <a href="{{ route('public.bin-detail', $bin->id) }}" onclick="event.stopPropagation()" class="font-bold text-win-green hover:underline">
+                                        Detail &rarr;
+                                    </a>
+                                </div>
                             </div>
 
                         </div>
@@ -162,10 +150,8 @@
 @endsection
 
 @push('scripts')
-<!-- Leaflet JS (CDN Cloudflare stabil) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
-    // Data Stasiun dari Backend Laravel
     const stations = @json($smartBins);
     let map;
     let markers = {};
@@ -177,61 +163,26 @@
     });
 
     function initMap() {
-        if (typeof L === 'undefined') {
-            console.error('Leaflet JS belum termuat');
-            return;
-        }
+        if (typeof L === 'undefined') return;
 
-        // Pusat peta awal: Area Kampus UIN SGD Cibiru Bandung
         const defaultLat = -6.929824;
         const defaultLng = 107.718162;
 
         map = L.map('map', {
             center: [defaultLat, defaultLng],
             zoom: 16,
-            zoomControl: true,
-            scrollWheelZoom: true
+            zoomControl: true
         });
 
-        // 1. Layer Utama: Google Maps Streets (Anti-Blokir 100%, Stabil di Seluruh Jaringan Indonesia)
-        const googleStreets = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+        // Google Maps Layer (Ultra Cepat & Bebas Blokir)
+        L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
             maxZoom: 20,
-            attribution: '&copy; Google Maps • SMART BIN WIn Bandung'
-        });
+            attribution: '&copy; Google Maps'
+        }).addTo(map);
 
-        // 2. Layer Alternatif: CARTO Voyager (Minimalis Bersih)
-        const cartoVoyager = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-            maxZoom: 20,
-            subdomains: 'abcd',
-            attribution: '&copy; OpenStreetMap &copy; CARTO'
-        });
+        setTimeout(() => { if (map) map.invalidateSize(); }, 300);
+        window.addEventListener('resize', () => { if (map) map.invalidateSize(); });
 
-        // 3. Layer Satelit: Google Hybrid
-        const googleSatellite = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
-            maxZoom: 20,
-            attribution: '&copy; Google Satellite'
-        });
-
-        // Aktifkan Google Streets secara default
-        googleStreets.addTo(map);
-
-        // Tambahkan pilihan ganti mode peta di pojok kanan atas
-        const baseMaps = {
-            "🗺️ Google Peta": googleStreets,
-            "🌍 CARTO Voyager": cartoVoyager,
-            "🛰️ Citra Satelit": googleSatellite
-        };
-        L.control.layers(baseMaps).addTo(map);
-
-        // Pastikan render ukuran peta sempurna
-        setTimeout(() => {
-            map.invalidateSize();
-        }, 300);
-        window.addEventListener('resize', () => {
-            if (map) map.invalidateSize();
-        });
-
-        // Pasang Pin untuk Setiap Stasiun
         stations.forEach(bin => {
             const capOrg = Number(bin.capacity_organic ?? bin.capacity_organik ?? 0);
             const capPla = Number(bin.capacity_plastic ?? bin.capacity_plastik ?? 0);
@@ -240,35 +191,30 @@
             const avgCap = Math.round((capOrg + capPla + capPap + capMet) / 4);
             const statusColor = getStatusColor(bin, capOrg, capPla, capPap, capMet);
             
-            // Custom Marker Icon dengan CSS
             const customIcon = L.divIcon({
                 className: 'custom-bin-marker-wrapper',
-                html: `<div class="custom-bin-marker" style="background-color: ${statusColor}; width: 34px; height: 34px;">
+                html: `<div class="custom-bin-marker" style="background-color: ${statusColor}; width: 32px; height: 32px;">
                         <span>🗑️</span>
                        </div>`,
-                iconSize: [34, 34],
-                iconAnchor: [17, 17],
-                popupAnchor: [0, -18]
+                iconSize: [32, 32],
+                iconAnchor: [16, 16],
+                popupAnchor: [0, -16]
             });
 
             const marker = L.marker([bin.latitude, bin.longitude], { icon: customIcon }).addTo(map);
 
             const popupHtml = `
-                <div style="font-family: 'Plus Jakarta Sans', sans-serif; min-width: 220px; padding: 4px;">
-                    <div style="font-size: 10px; font-weight: bold; color: #287A4D; margin-bottom: 2px;">${bin.station_code || 'STATION'}</div>
-                    <div style="font-size: 13px; font-weight: bold; color: #26352D; margin-bottom: 4px;">${bin.name}</div>
-                    <div style="font-size: 11px; color: #5A6E63; margin-bottom: 8px;">${bin.location_name}</div>
-                    
-                    <div style="font-size: 11px; margin-bottom: 8px; border-top: 1px solid #E5EAE7; padding-top: 6px;">
-                        <div>Kapasitas Rata-rata: <strong>${avgCap}%</strong></div>
-                    </div>
-
+                <div style="font-family: 'Plus Jakarta Sans', sans-serif; min-width: 200px; padding: 2px;">
+                    <div style="font-size: 10px; font-weight: bold; color: #287A4D;">${bin.station_code || 'STATION'}</div>
+                    <div style="font-size: 13px; font-weight: bold; color: #1C2822; margin-bottom: 2px;">${bin.name}</div>
+                    <div style="font-size: 11px; color: #5C7065; margin-bottom: 6px;">${bin.location_name}</div>
+                    <div style="font-size: 11px; margin-bottom: 6px;">Kapasitas: <strong>${avgCap}%</strong></div>
                     <div style="display: flex; gap: 8px;">
                         <a href="https://www.google.com/maps/search/?api=1&query=${bin.latitude},${bin.longitude}" target="_blank" 
-                           style="background: #287A4D; color: white; padding: 5px 10px; border-radius: 8px; text-decoration: none; font-size: 11px; font-weight: bold;">
-                           🧭 Arahkan Rute
+                           style="background: #287A4D; color: white; padding: 4px 8px; border-radius: 6px; text-decoration: none; font-size: 11px; font-weight: bold;">
+                           🧭 Buka Rute
                         </a>
-                        <a href="/bins/${bin.id}" style="color: #287A4D; font-size: 11px; font-weight: bold; padding: 5px 0;">
+                        <a href="/bins/${bin.id}" style="color: #287A4D; font-size: 11px; font-weight: bold; padding: 4px 0;">
                            Detail &rarr;
                         </a>
                     </div>
@@ -295,72 +241,63 @@
         }
     }
 
-    // Geolocation Haversine Distance
     function detectUserLocation() {
         const btnText = document.getElementById('btn-gps-text');
         const box = document.getElementById('gps-status-box');
         const statusText = document.getElementById('gps-status-text');
 
         if (!navigator.geolocation) {
-            alert('Perangkat Anda tidak mendukung geolokasi GPS.');
+            alert('Perangkat Anda tidak mendukung GPS.');
             return;
         }
 
-        btnText.innerText = 'Mencari Koordinat...';
+        btnText.innerText = 'Mencari...';
         box.classList.remove('hidden');
-        statusText.innerText = 'Mengakses sensor GPS smartphone/laptop Anda...';
+        statusText.innerText = 'Mengakses lokasi GPS...';
 
         navigator.geolocation.getCurrentPosition(
-            function(position) {
-                const userLat = position.coords.latitude;
-                const userLng = position.coords.longitude;
+            function(pos) {
+                const lat = pos.coords.latitude;
+                const lng = pos.coords.longitude;
 
                 btnText.innerText = 'Lokasi Terdeteksi ✓';
-                statusText.innerText = `Posisi Anda terdeteksi: ${userLat.toFixed(5)}, ${userLng.toFixed(5)}. Menghitung jarak ke Smart Bin terdekat...`;
+                statusText.innerText = `Lokasi Anda: ${lat.toFixed(5)}, ${lng.toFixed(5)}. Jarak stasiun diperbarui.`;
 
-                // Pasang marker posisi user di peta
-                if (userMarker) {
-                    map.removeLayer(userMarker);
-                }
-
+                if (userMarker) map.removeLayer(userMarker);
                 const userIcon = L.divIcon({
                     className: 'user-marker',
-                    html: `<div style="background-color: #0284c7; width: 20px; height: 20px; border-radius: 9999px; border: 3px solid white; box-shadow: 0 0 12px #0284c7;"></div>`,
-                    iconSize: [20, 20],
-                    iconAnchor: [10, 10]
+                    html: `<div style="background-color: #0284c7; width: 18px; height: 18px; border-radius: 9999px; border: 3px solid white; box-shadow: 0 0 10px #0284c7;"></div>`,
+                    iconSize: [18, 18],
+                    iconAnchor: [9, 9]
                 });
 
-                userMarker = L.marker([userLat, userLng], { icon: userIcon }).addTo(map);
-                userMarker.bindPopup('<strong>📍 Posisi Anda Saat Ini</strong>').openPopup();
+                userMarker = L.marker([lat, lng], { icon: userIcon }).addTo(map);
+                userMarker.bindPopup('<strong>📍 Posisi Anda</strong>').openPopup();
 
-                // Hitung Haversine untuk tiap stasiun
                 stations.forEach(bin => {
-                    const distKm = calculateHaversine(userLat, userLng, bin.latitude, bin.longitude);
+                    const distKm = calculateHaversine(lat, lng, bin.latitude, bin.longitude);
                     const el = document.getElementById(`distance-${bin.id}`);
-                    if (el) {
-                        el.innerHTML = `📍 <strong>${distKm.toFixed(2)} km</strong> dari Anda`;
-                    }
+                    if (el) el.innerHTML = `📍 <strong>${distKm.toFixed(2)} km</strong>`;
                 });
 
-                map.setView([userLat, userLng], 16);
+                map.setView([lat, lng], 16);
             },
-            function(error) {
-                btnText.innerText = 'Pindai Lokasi Terdekat Saya';
-                statusText.innerText = 'Gagal mengakses GPS: ' + error.message;
+            function(err) {
+                btnText.innerText = 'Lokasi Saya';
+                statusText.innerText = 'Gagal mengakses GPS: ' + err.message;
             },
-            { enableHighAccuracy: true, timeout: 10000 }
+            { enableHighAccuracy: true, timeout: 8000 }
         );
     }
 
     function calculateHaversine(lat1, lon1, lat2, lon2) {
-        const R = 6371; // km
+        const R = 6371;
         const dLat = (lat2 - lat1) * Math.PI / 180;
         const dLon = (lon2 - lon1) * Math.PI / 180;
         const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
                   Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
                   Math.sin(dLon/2) * Math.sin(dLon/2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-        return R * c;
+        return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
     }
 
     function filterStations() {
@@ -375,20 +312,15 @@
             const matchQuery = name.includes(query) || loc.includes(query);
             const matchStatus = (activeFilter === 'all') || (status === activeFilter);
 
-            if (matchQuery && matchStatus) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
+            card.style.display = (matchQuery && matchStatus) ? 'block' : 'none';
         });
     }
 
     function setFilterStatus(status) {
         activeFilter = status;
-
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.classList.remove('bg-win-green', 'text-white');
-            btn.classList.add('bg-slate-100', 'text-win-slate');
+            btn.classList.add('bg-slate-100', 'text-slate-600');
         });
 
         const activeBtn = document.getElementById(
@@ -398,7 +330,7 @@
         );
 
         if (activeBtn) {
-            activeBtn.classList.remove('bg-slate-100', 'text-win-slate');
+            activeBtn.classList.remove('bg-slate-100', 'text-slate-600');
             activeBtn.classList.add('bg-win-green', 'text-white');
         }
 
@@ -406,4 +338,3 @@
     }
 </script>
 @endpush
-
