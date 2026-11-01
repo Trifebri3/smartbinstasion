@@ -18,51 +18,54 @@
                 </a>
 
                 <!-- Desktop Navigation Links -->
-                <div class="hidden md:flex items-center space-x-1 lg:space-x-2">
+                <div class="hidden md:flex items-center space-x-1 lg:space-x-1.5">
                     <!-- 1. Dashboard -->
                     <a href="{{ route('dashboard') }}" 
-                       class="px-3 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ request()->routeIs('dashboard') ? 'bg-win-green-light text-win-green font-extrabold' : 'text-slate-600 hover:text-win-dark hover:bg-slate-100' }}">
-                        <svg class="w-4 h-4 text-win-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
-                        </svg>
+                       class="px-2.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ request()->routeIs('dashboard') ? 'bg-win-green-light text-win-green font-extrabold' : 'text-slate-600 hover:text-win-dark hover:bg-slate-100' }}">
+                        <svg class="w-4 h-4 text-win-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
                         <span>Dashboard</span>
                     </a>
 
-                    <!-- 2. Auto-Sort (AI) -->
+                    <!-- 2. Statistik -->
+                    <a href="{{ route('admin.statistics') }}" 
+                       class="px-2.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ request()->routeIs('admin.statistics') ? 'bg-win-green-light text-win-green font-extrabold' : 'text-slate-600 hover:text-win-dark hover:bg-slate-100' }}">
+                        <svg class="w-4 h-4 text-win-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                        <span>Statistik</span>
+                    </a>
+
+                    <!-- 3. Kondisi Perangkat -->
+                    <a href="{{ route('admin.devices') }}" 
+                       class="px-2.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ request()->routeIs('admin.devices') ? 'bg-win-green-light text-win-green font-extrabold' : 'text-slate-600 hover:text-win-dark hover:bg-slate-100' }}">
+                        <svg class="w-4 h-4 text-win-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
+                        <span>Kondisi Perangkat</span>
+                    </a>
+
+                    <!-- 4. Lokasi -->
+                    <a href="{{ route('admin.locations') }}" 
+                       class="px-2.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ request()->routeIs('admin.locations') ? 'bg-win-green-light text-win-green font-extrabold' : 'text-slate-600 hover:text-win-dark hover:bg-slate-100' }}">
+                        <svg class="w-4 h-4 text-win-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        <span>Lokasi</span>
+                    </a>
+
+                    <!-- 5. Kapasitas -->
+                    <a href="{{ route('admin.capacity') }}" 
+                       class="px-2.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ request()->routeIs('admin.capacity') ? 'bg-win-green-light text-win-green font-extrabold' : 'text-slate-600 hover:text-win-dark hover:bg-slate-100' }}">
+                        <svg class="w-4 h-4 text-win-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                        <span>Kapasitas</span>
+                    </a>
+
+                    <!-- 6. Auto-Sort (AI) -->
                     <a href="{{ route('auto.sort') }}" 
-                       class="px-3 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ request()->routeIs('auto.sort') ? 'bg-win-green-light text-win-green font-extrabold' : 'text-slate-600 hover:text-win-dark hover:bg-slate-100' }}">
-                        <svg class="w-4 h-4 text-win-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                        </svg>
-                        <span>Auto-Sort AI</span>
+                       class="px-2.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ request()->routeIs('auto.sort') ? 'bg-win-green-light text-win-green font-extrabold' : 'text-slate-600 hover:text-win-dark hover:bg-slate-100' }}">
+                        <svg class="w-4 h-4 text-win-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        <span>Auto-Sort</span>
                     </a>
 
-                    <!-- 3. Kontrol Servo -->
+                    <!-- 7. Kontrol Servo -->
                     <a href="{{ route('servos.index') }}" 
-                       class="px-3 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ request()->routeIs('servos.*') ? 'bg-win-green-light text-win-green font-extrabold' : 'text-slate-600 hover:text-win-dark hover:bg-slate-100' }}">
-                        <svg class="w-4 h-4 text-win-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
-                        </svg>
-                        <span>Kontrol Servo</span>
-                    </a>
-
-                    <!-- 4. Live Monitor IoT -->
-                    <a href="{{ route('public.monitor') }}" target="_blank"
-                       class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-win-dark hover:bg-slate-100 transition flex items-center gap-1.5">
-                        <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-                        </svg>
-                        <span>Live Monitor</span>
-                    </a>
-
-                    <!-- 5. Peta Stasiun -->
-                    <a href="{{ route('public.locations') }}" target="_blank"
-                       class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-win-dark hover:bg-slate-100 transition flex items-center gap-1.5">
-                        <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        </svg>
-                        <span>Peta</span>
+                       class="px-2.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ request()->routeIs('servos.*') ? 'bg-win-green-light text-win-green font-extrabold' : 'text-slate-600 hover:text-win-dark hover:bg-slate-100' }}">
+                        <svg class="w-4 h-4 text-win-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+                        <span>Servo</span>
                     </a>
                 </div>
             </div>
@@ -170,17 +173,23 @@
             <a href="{{ route('dashboard') }}" class="block px-3 py-2 rounded-lg {{ request()->routeIs('dashboard') ? 'bg-win-green-light text-win-green font-bold' : 'text-slate-700 hover:bg-slate-50' }}">
                 Dashboard Utama
             </a>
+            <a href="{{ route('admin.statistics') }}" class="block px-3 py-2 rounded-lg {{ request()->routeIs('admin.statistics') ? 'bg-win-green-light text-win-green font-bold' : 'text-slate-700 hover:bg-slate-50' }}">
+                Statistik & Analitik
+            </a>
+            <a href="{{ route('admin.devices') }}" class="block px-3 py-2 rounded-lg {{ request()->routeIs('admin.devices') ? 'bg-win-green-light text-win-green font-bold' : 'text-slate-700 hover:bg-slate-50' }}">
+                Kondisi Perangkat (Hardware)
+            </a>
+            <a href="{{ route('admin.locations') }}" class="block px-3 py-2 rounded-lg {{ request()->routeIs('admin.locations') ? 'bg-win-green-light text-win-green font-bold' : 'text-slate-700 hover:bg-slate-50' }}">
+                Lokasi & Peta Stasiun
+            </a>
+            <a href="{{ route('admin.capacity') }}" class="block px-3 py-2 rounded-lg {{ request()->routeIs('admin.capacity') ? 'bg-win-green-light text-win-green font-bold' : 'text-slate-700 hover:bg-slate-50' }}">
+                Monitoring Kapasitas Wadah
+            </a>
             <a href="{{ route('auto.sort') }}" class="block px-3 py-2 rounded-lg {{ request()->routeIs('auto.sort') ? 'bg-win-green-light text-win-green font-bold' : 'text-slate-700 hover:bg-slate-50' }}">
                 Auto-Sort AI
             </a>
             <a href="{{ route('servos.index') }}" class="block px-3 py-2 rounded-lg {{ request()->routeIs('servos.*') ? 'bg-win-green-light text-win-green font-bold' : 'text-slate-700 hover:bg-slate-50' }}">
                 Kontrol Servo
-            </a>
-            <a href="{{ route('public.monitor') }}" target="_blank" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">
-                Live Monitor IoT
-            </a>
-            <a href="{{ route('public.locations') }}" target="_blank" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">
-                Peta Stasiun
             </a>
             <a href="{{ route('user.portal') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">
                 Tampilan Pengguna (Portal)

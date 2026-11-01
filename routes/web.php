@@ -42,6 +42,14 @@ Route::middleware(['auth', EnsureUserIsAdmin::class])->group(function () {
         return view('dashboard', compact('smartBins'));
     })->name('dashboard');
 
+    // 4 Modul Baru Admin (Statistik, Kondisi Perangkat, Lokasi, Kapasitas)
+    Route::get('/admin/statistics', [\App\Http\Controllers\Admin\AdminModuleController::class, 'statistics'])->name('admin.statistics');
+    Route::get('/admin/devices', [\App\Http\Controllers\Admin\AdminModuleController::class, 'devices'])->name('admin.devices');
+    Route::get('/admin/locations', [\App\Http\Controllers\Admin\AdminModuleController::class, 'locations'])->name('admin.locations');
+    Route::get('/admin/capacity', [\App\Http\Controllers\Admin\AdminModuleController::class, 'capacity'])->name('admin.capacity');
+    Route::post('/admin/stations/{id}/empty', [\App\Http\Controllers\Admin\AdminModuleController::class, 'emptyStation'])->name('admin.stations.empty');
+    Route::post('/admin/stations/{id}/status', [\App\Http\Controllers\Admin\AdminModuleController::class, 'updateStatus'])->name('admin.stations.update-status');
+
     // Trigger Notifikasi Email Sampah Penuh via Klik di Admin
     Route::post('/admin/stations/{id}/alert-email', [\App\Http\Controllers\Admin\BinAlertController::class, 'triggerStationAlert'])->name('admin.stations.alert');
     Route::post('/admin/sensors/alert-live', [\App\Http\Controllers\Admin\BinAlertController::class, 'triggerLiveSensorAlert'])->name('admin.sensors.alert-live');
