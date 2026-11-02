@@ -56,9 +56,9 @@
             </div>
 
             <!-- ============================================================== -->
-            <!-- 4 MENU UTAMA ADMIN: STATISTIK, KONDISI PERANGKAT, LOKASI, KAPASITAS -->
+            <!-- 3 MENU UTAMA ADMIN: STATISTIK, LOKASI, KAPASITAS -->
             <!-- ============================================================== -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <!-- 1. Menu Statistik -->
                 <a href="{{ Route::has('admin.statistics') ? route('admin.statistics') : url('/admin/statistics') }}" class="group bg-white border border-slate-200/80 hover:border-win-green rounded-2xl p-4 shadow-sm hover:shadow-md transition flex items-center justify-between">
                     <div class="flex items-center gap-3">
@@ -73,21 +73,7 @@
                     <svg class="w-4 h-4 text-slate-400 group-hover:text-win-green group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                 </a>
 
-                <!-- 2. Menu Kondisi Perangkat -->
-                <a href="{{ Route::has('admin.devices') ? route('admin.devices') : url('/admin/devices') }}" class="group bg-white border border-slate-200/80 hover:border-win-green rounded-2xl p-4 shadow-sm hover:shadow-md transition flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 group-hover:bg-blue-600 group-hover:text-white transition flex items-center justify-center shrink-0">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
-                        </div>
-                        <div>
-                            <div class="text-xs font-extrabold text-win-dark group-hover:text-blue-700 transition">Kondisi Perangkat</div>
-                            <div class="text-[11px] text-slate-500">ESP32, Servo & Sensor</div>
-                        </div>
-                    </div>
-                    <svg class="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                </a>
-
-                <!-- 3. Menu Lokasi -->
+                <!-- 2. Menu Lokasi -->
                 <a href="{{ Route::has('admin.locations') ? route('admin.locations') : url('/admin/locations') }}" class="group bg-white border border-slate-200/80 hover:border-win-green rounded-2xl p-4 shadow-sm hover:shadow-md transition flex items-center justify-between">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 group-hover:bg-amber-600 group-hover:text-white transition flex items-center justify-center shrink-0">
@@ -101,7 +87,7 @@
                     <svg class="w-4 h-4 text-slate-400 group-hover:text-amber-600 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                 </a>
 
-                <!-- 4. Menu Kapasitas -->
+                <!-- 3. Menu Kapasitas -->
                 <a href="{{ Route::has('admin.capacity') ? route('admin.capacity') : url('/admin/capacity') }}" class="group bg-white border border-slate-200/80 hover:border-win-green rounded-2xl p-4 shadow-sm hover:shadow-md transition flex items-center justify-between">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-700 group-hover:bg-rose-600 group-hover:text-white transition flex items-center justify-center shrink-0">

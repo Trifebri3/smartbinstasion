@@ -140,9 +140,9 @@
             // Koordinat Kampus 1 UIN SGD Bandung
             const map = L.map('admin-map').setView([-6.929824, 107.718162], 16);
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; OpenStreetMap contributors • SmartBin UIN SGD Bandung',
-                maxZoom: 19
+            L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+                maxZoom: 20,
+                attribution: '&copy; Google Maps • SmartBin UIN SGD Bandung'
             }).addTo(map);
 
             const stations = @json($stations);

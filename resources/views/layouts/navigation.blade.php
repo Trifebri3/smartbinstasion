@@ -31,40 +31,43 @@
                         <span>Statistik</span>
                     </a>
 
-                    <!-- 3. Kondisi Perangkat -->
-                    <a href="{{ Route::has('admin.devices') ? route('admin.devices') : url('/admin/devices') }}" 
-                       class="px-2.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ request()->routeIs('admin.devices') ? 'bg-win-green-light text-win-green font-extrabold' : 'text-slate-600 hover:text-win-dark hover:bg-slate-100' }}">
-                        <svg class="w-4 h-4 text-win-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
-                        <span>Kondisi Perangkat</span>
-                    </a>
-
-                    <!-- 4. Lokasi -->
+                    <!-- 3. Lokasi -->
                     <a href="{{ Route::has('admin.locations') ? route('admin.locations') : url('/admin/locations') }}" 
                        class="px-2.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ request()->routeIs('admin.locations') ? 'bg-win-green-light text-win-green font-extrabold' : 'text-slate-600 hover:text-win-dark hover:bg-slate-100' }}">
                         <svg class="w-4 h-4 text-win-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                         <span>Lokasi</span>
                     </a>
 
-                    <!-- 5. Kapasitas -->
+                    <!-- 4. Kapasitas -->
                     <a href="{{ Route::has('admin.capacity') ? route('admin.capacity') : url('/admin/capacity') }}" 
                        class="px-2.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ request()->routeIs('admin.capacity') ? 'bg-win-green-light text-win-green font-extrabold' : 'text-slate-600 hover:text-win-dark hover:bg-slate-100' }}">
                         <svg class="w-4 h-4 text-win-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
                         <span>Kapasitas</span>
                     </a>
 
-                    <!-- 6. Auto-Sort (AI) -->
-                    <a href="{{ route('auto.sort') }}" 
-                       class="px-2.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ request()->routeIs('auto.sort') ? 'bg-win-green-light text-win-green font-extrabold' : 'text-slate-600 hover:text-win-dark hover:bg-slate-100' }}">
-                        <svg class="w-4 h-4 text-win-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                        <span>Auto-Sort</span>
-                    </a>
+                    <!-- Fitur Tambahan (Hanya Icon Kecil Samaran) -->
+                    <div class="inline-flex items-center gap-0.5 pl-2 ml-1 border-l border-slate-200/70">
+                        <!-- Kondisi Perangkat (Mini Icon) -->
+                        <a href="{{ Route::has('admin.devices') ? route('admin.devices') : url('/admin/devices') }}" 
+                           class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition {{ request()->routeIs('admin.devices') ? 'text-win-green bg-slate-100' : '' }}" 
+                           title="Perangkat">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
+                        </a>
 
-                    <!-- 7. Kontrol Servo -->
-                    <a href="{{ route('servos.index') }}" 
-                       class="px-2.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 {{ request()->routeIs('servos.*') ? 'bg-win-green-light text-win-green font-extrabold' : 'text-slate-600 hover:text-win-dark hover:bg-slate-100' }}">
-                        <svg class="w-4 h-4 text-win-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
-                        <span>Servo</span>
-                    </a>
+                        <!-- Auto-Sort (Mini Icon) -->
+                        <a href="{{ route('auto.sort') }}" 
+                           class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition {{ request()->routeIs('auto.sort') ? 'text-win-green bg-slate-100' : '' }}" 
+                           title="Auto-Sort">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </a>
+
+                        <!-- Servo (Mini Icon) -->
+                        <a href="{{ route('servos.index') }}" 
+                           class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition {{ request()->routeIs('servos.*') ? 'text-win-green bg-slate-100' : '' }}" 
+                           title="Servo">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -174,26 +177,30 @@
             <a href="{{ Route::has('admin.statistics') ? route('admin.statistics') : url('/admin/statistics') }}" class="block px-3 py-2 rounded-lg {{ request()->routeIs('admin.statistics') ? 'bg-win-green-light text-win-green font-bold' : 'text-slate-700 hover:bg-slate-50' }}">
                 Statistik & Analitik
             </a>
-            <a href="{{ Route::has('admin.devices') ? route('admin.devices') : url('/admin/devices') }}" class="block px-3 py-2 rounded-lg {{ request()->routeIs('admin.devices') ? 'bg-win-green-light text-win-green font-bold' : 'text-slate-700 hover:bg-slate-50' }}">
-                Kondisi Perangkat (Hardware)
-            </a>
             <a href="{{ Route::has('admin.locations') ? route('admin.locations') : url('/admin/locations') }}" class="block px-3 py-2 rounded-lg {{ request()->routeIs('admin.locations') ? 'bg-win-green-light text-win-green font-bold' : 'text-slate-700 hover:bg-slate-50' }}">
                 Lokasi & Peta Stasiun
             </a>
             <a href="{{ Route::has('admin.capacity') ? route('admin.capacity') : url('/admin/capacity') }}" class="block px-3 py-2 rounded-lg {{ request()->routeIs('admin.capacity') ? 'bg-win-green-light text-win-green font-bold' : 'text-slate-700 hover:bg-slate-50' }}">
                 Monitoring Kapasitas Wadah
             </a>
-            <a href="{{ route('auto.sort') }}" class="block px-3 py-2 rounded-lg {{ request()->routeIs('auto.sort') ? 'bg-win-green-light text-win-green font-bold' : 'text-slate-700 hover:bg-slate-50' }}">
-                Auto-Sort AI
-            </a>
-            <a href="{{ route('servos.index') }}" class="block px-3 py-2 rounded-lg {{ request()->routeIs('servos.*') ? 'bg-win-green-light text-win-green font-bold' : 'text-slate-700 hover:bg-slate-50' }}">
-                Kontrol Servo
-            </a>
             <a href="{{ route('user.portal') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">
                 Tampilan Pengguna (Portal)
             </a>
             <a href="{{ route('profile.edit') }}" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">
                 Pengaturan Profil
+            </a>
+        </div>
+
+        <!-- Subtle Discreet Tools in Mobile (Icon Kecil - Tidak Mencolok) -->
+        <div class="pt-2 border-t border-slate-100 flex items-center justify-end gap-1">
+            <a href="{{ Route::has('admin.devices') ? route('admin.devices') : url('/admin/devices') }}" class="p-1.5 text-slate-300 hover:text-slate-600 rounded" title="Perangkat">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
+            </a>
+            <a href="{{ route('auto.sort') }}" class="p-1.5 text-slate-300 hover:text-slate-600 rounded" title="Auto-Sort">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </a>
+            <a href="{{ route('servos.index') }}" class="p-1.5 text-slate-300 hover:text-slate-600 rounded" title="Servo">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
             </a>
         </div>
 

@@ -21,7 +21,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
             <!-- 1. KEY METRIC CARDS -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 
                 <!-- Total Setoran -->
                 <div class="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm hover:shadow-md transition">
@@ -55,22 +55,6 @@
                     </div>
                 </div>
 
-                <!-- Akurasi Auto-Sort AI -->
-                <div class="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm hover:shadow-md transition">
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Akurasi AI Classifier</span>
-                        <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                        </div>
-                    </div>
-                    <div class="mt-3">
-                        <div class="text-2xl sm:text-3xl font-extrabold text-win-dark">96.8%</div>
-                        <p class="text-[11px] text-win-slate mt-1 flex items-center gap-1 font-medium">
-                            Model MobileNet + Heuristik
-                        </p>
-                    </div>
-                </div>
-
                 <!-- Civitas Berpartisipasi -->
                 <div class="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm hover:shadow-md transition">
                     <div class="flex items-center justify-between">
@@ -89,107 +73,68 @@
 
             </div>
 
-            <!-- 2. KOMPOSISI 4 KATEGORI SAMPAH & DAMPAK LINGKUNGAN -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                
-                <!-- Komposisi Kategori -->
-                <div class="lg:col-span-7 bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm space-y-5">
-                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                        <div>
-                            <h3 class="text-base font-extrabold text-win-dark">Distribusi 4 Kategori Sampah</h3>
-                            <p class="text-xs text-slate-500">Persentase dan frekuensi pemilahan sampah di seluruh stasiun</p>
-                        </div>
-                        <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-600">
-                            {{ array_sum($categoryCounts) }} Item
-                        </span>
+            <!-- 2. KOMPOSISI 4 KATEGORI SAMPAH -->
+            <div class="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm space-y-5">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                    <div>
+                        <h3 class="text-base font-extrabold text-win-dark">Distribusi 4 Kategori Sampah</h3>
+                        <p class="text-xs text-slate-500">Persentase dan frekuensi pemilahan sampah di seluruh stasiun</p>
                     </div>
-
-                    <!-- Progress Bar Gabungan -->
-                    <div class="w-full h-4 rounded-full bg-slate-100 overflow-hidden flex shadow-inner">
-                        <div style="width: {{ $categoryPercentages['organik'] }}%" class="bg-emerald-500 hover:opacity-90 transition" title="Organik: {{ $categoryPercentages['organik'] }}%"></div>
-                        <div style="width: {{ $categoryPercentages['plastik'] }}%" class="bg-amber-400 hover:opacity-90 transition" title="Plastik: {{ $categoryPercentages['plastik'] }}%"></div>
-                        <div style="width: {{ $categoryPercentages['kertas'] }}%" class="bg-blue-500 hover:opacity-90 transition" title="Kertas: {{ $categoryPercentages['kertas'] }}%"></div>
-                        <div style="width: {{ $categoryPercentages['logam'] }}%" class="bg-purple-500 hover:opacity-90 transition" title="Logam & Kaca: {{ $categoryPercentages['logam'] }}%"></div>
-                    </div>
-
-                    <!-- Detail per Kategori -->
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-                        <!-- Organik -->
-                        <div class="p-3 rounded-xl bg-emerald-50/60 border border-emerald-100 space-y-1">
-                            <div class="flex items-center gap-1.5">
-                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-                                <span class="text-xs font-bold text-emerald-900">Organik</span>
-                            </div>
-                            <div class="text-lg font-extrabold text-emerald-950">{{ $categoryPercentages['organik'] }}%</div>
-                            <div class="text-[10px] text-emerald-700 font-medium">{{ $categoryCounts['organik'] }} setoran</div>
-                        </div>
-
-                        <!-- Plastik -->
-                        <div class="p-3 rounded-xl bg-amber-50/60 border border-amber-100 space-y-1">
-                            <div class="flex items-center gap-1.5">
-                                <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
-                                <span class="text-xs font-bold text-amber-900">Plastik</span>
-                            </div>
-                            <div class="text-lg font-extrabold text-amber-950">{{ $categoryPercentages['plastik'] }}%</div>
-                            <div class="text-[10px] text-amber-700 font-medium">{{ $categoryCounts['plastik'] }} setoran</div>
-                        </div>
-
-                        <!-- Kertas -->
-                        <div class="p-3 rounded-xl bg-blue-50/60 border border-blue-100 space-y-1">
-                            <div class="flex items-center gap-1.5">
-                                <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
-                                <span class="text-xs font-bold text-blue-900">Kertas</span>
-                            </div>
-                            <div class="text-lg font-extrabold text-blue-950">{{ $categoryPercentages['kertas'] }}%</div>
-                            <div class="text-[10px] text-blue-700 font-medium">{{ $categoryCounts['kertas'] }} setoran</div>
-                        </div>
-
-                        <!-- Logam & Kaca -->
-                        <div class="p-3 rounded-xl bg-purple-50/60 border border-purple-100 space-y-1">
-                            <div class="flex items-center gap-1.5">
-                                <span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span>
-                                <span class="text-xs font-bold text-purple-900">Logam & Kaca</span>
-                            </div>
-                            <div class="text-lg font-extrabold text-purple-950">{{ $categoryPercentages['logam'] }}%</div>
-                            <div class="text-[10px] text-purple-700 font-medium">{{ $categoryCounts['logam'] }} setoran</div>
-                        </div>
-                    </div>
+                    <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-600">
+                        {{ array_sum($categoryCounts) }} Item
+                    </span>
                 </div>
 
-                <!-- Dampak Ekoteologi & Lingkungan -->
-                <div class="lg:col-span-5 bg-gradient-to-br from-[#1E5C3A] to-[#287A4D] rounded-2xl p-6 text-white flex flex-col justify-between shadow-md relative overflow-hidden">
-                    <div class="space-y-4 relative z-10">
-                        <div>
-                            <span class="text-[10px] font-bold tracking-wider uppercase text-emerald-200">Dampak Ekologis Kampus</span>
-                            <h3 class="text-lg font-extrabold mt-0.5">Kontribusi Daur Ulang Civitas UIN</h3>
-                        </div>
-
-                        <div class="space-y-3 text-xs">
-                            <div class="p-3 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-between">
-                                <span class="text-emerald-100">Reduksi Emisi Karbon (CO2e)</span>
-                                <span class="font-extrabold text-white text-sm">~184.2 kg CO2e</span>
-                            </div>
-
-                            <div class="p-3 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-between">
-                                <span class="text-emerald-100">Potensi Kompos Tanah Organik</span>
-                                <span class="font-extrabold text-white text-sm">~62.5 kg Pupuk</span>
-                            </div>
-
-                            <div class="p-3 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-between">
-                                <span class="text-emerald-100">Pohon Terselamatkan (Daur Ulang Kertas)</span>
-                                <span class="font-extrabold text-white text-sm">~4 Pohon Dewasa</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="pt-4 border-t border-white/15 text-[11px] text-emerald-100/80 relative z-10 flex items-center justify-between">
-                        <span>Penerapan Nilai Ekoteologi Islam</span>
-                        <span class="font-semibold text-white">UIN SGD Bandung</span>
-                    </div>
-
-                    <div class="absolute -right-12 -bottom-12 w-48 h-48 rounded-full bg-emerald-400/20 blur-xl pointer-events-none"></div>
+                <!-- Progress Bar Gabungan -->
+                <div class="w-full h-4 rounded-full bg-slate-100 overflow-hidden flex shadow-inner">
+                    <div style="width: {{ $categoryPercentages['organik'] }}%" class="bg-emerald-500 hover:opacity-90 transition" title="Organik: {{ $categoryPercentages['organik'] }}%"></div>
+                    <div style="width: {{ $categoryPercentages['plastik'] }}%" class="bg-amber-400 hover:opacity-90 transition" title="Plastik: {{ $categoryPercentages['plastik'] }}%"></div>
+                    <div style="width: {{ $categoryPercentages['kertas'] }}%" class="bg-blue-500 hover:opacity-90 transition" title="Kertas: {{ $categoryPercentages['kertas'] }}%"></div>
+                    <div style="width: {{ $categoryPercentages['logam'] }}%" class="bg-purple-500 hover:opacity-90 transition" title="Logam & Kaca: {{ $categoryPercentages['logam'] }}%"></div>
                 </div>
 
+                <!-- Detail per Kategori -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+                    <!-- Organik -->
+                    <div class="p-3 rounded-xl bg-emerald-50/60 border border-emerald-100 space-y-1">
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                            <span class="text-xs font-bold text-emerald-900">Organik</span>
+                        </div>
+                        <div class="text-lg font-extrabold text-emerald-950">{{ $categoryPercentages['organik'] }}%</div>
+                        <div class="text-[10px] text-emerald-700 font-medium">{{ $categoryCounts['organik'] }} setoran</div>
+                    </div>
+
+                    <!-- Plastik -->
+                    <div class="p-3 rounded-xl bg-amber-50/60 border border-amber-100 space-y-1">
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+                            <span class="text-xs font-bold text-amber-900">Plastik</span>
+                        </div>
+                        <div class="text-lg font-extrabold text-amber-950">{{ $categoryPercentages['plastik'] }}%</div>
+                        <div class="text-[10px] text-amber-700 font-medium">{{ $categoryCounts['plastik'] }} setoran</div>
+                    </div>
+
+                    <!-- Kertas -->
+                    <div class="p-3 rounded-xl bg-blue-50/60 border border-blue-100 space-y-1">
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+                            <span class="text-xs font-bold text-blue-900">Kertas</span>
+                        </div>
+                        <div class="text-lg font-extrabold text-blue-950">{{ $categoryPercentages['kertas'] }}%</div>
+                        <div class="text-[10px] text-blue-700 font-medium">{{ $categoryCounts['kertas'] }} setoran</div>
+                    </div>
+
+                    <!-- Logam & Kaca -->
+                    <div class="p-3 rounded-xl bg-purple-50/60 border border-purple-100 space-y-1">
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span>
+                            <span class="text-xs font-bold text-purple-900">Logam & Kaca</span>
+                        </div>
+                        <div class="text-lg font-extrabold text-purple-950">{{ $categoryPercentages['logam'] }}%</div>
+                        <div class="text-[10px] text-purple-700 font-medium">{{ $categoryCounts['logam'] }} setoran</div>
+                    </div>
+                </div>
             </div>
 
             <!-- 3. TABEL AKTIVITAS SETORAN TERKINI -->
