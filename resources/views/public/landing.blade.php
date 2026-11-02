@@ -42,21 +42,11 @@
                     </a>
                 </div>
 
-                <!-- 3 Quick Stats -->
-                <div class="flex items-center justify-center lg:justify-start gap-8 pt-4 border-t border-slate-100 text-xs">
+                <!-- Quick Stat Titik Stasiun -->
+                <div class="flex items-center justify-center lg:justify-start pt-4 border-t border-slate-100 text-xs">
                     <div>
                         <div class="font-extrabold text-lg text-win-dark">{{ $totalBins }} Titik</div>
-                        <div class="text-slate-400 text-[11px]">Stasiun Kampus UIN</div>
-                    </div>
-                    <div class="w-px h-7 bg-slate-200"></div>
-                    <div>
-                        <div class="font-extrabold text-lg text-win-dark">{{ $totalWeightKg }} kg</div>
-                        <div class="text-slate-400 text-[11px]">Sampah Terpilah</div>
-                    </div>
-                    <div class="w-px h-7 bg-slate-200"></div>
-                    <div>
-                        <div class="font-extrabold text-lg text-win-green">4 Wadah</div>
-                        <div class="text-slate-400 text-[11px]">Sensor AI IoT</div>
+                        <div class="text-slate-400 text-[11px]">Stasiun Kampus UIN Sunan Gunung Djati</div>
                     </div>
                 </div>
 

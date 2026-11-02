@@ -60,17 +60,14 @@
 
     <!-- CLEAN & MINIMAL HEADER -->
     <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-100">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-2">
 
             <!-- LOGO: Minimal & Sleek -->
-            <a href="{{ route('home') }}" class="flex items-center gap-2.5 group">
-                <img src="{{ asset('logo.png') }}" alt="Logo UIN Sunan Gunung Djati Bandung" class="w-9 h-9 object-contain group-hover:scale-105 transition">
-                <div class="flex flex-col">
-                    <div class="flex items-center gap-1.5">
-                        <span class="font-extrabold text-base tracking-tight text-win-dark">SmartBin</span>
-                        <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-win-green-light text-win-green border border-emerald-200">UIN Bandung</span>
-                    </div>
-                    <span class="text-[10px] text-win-slate font-medium hidden sm:inline leading-none">UIN Sunan Gunung Djati</span>
+            <a href="{{ route('home') }}" class="flex items-center gap-2.5 shrink-0 group">
+                <img src="{{ asset('logo.png') }}" alt="Logo UIN Sunan Gunung Djati Bandung" class="w-8 h-8 sm:w-9 sm:h-9 object-contain group-hover:scale-105 transition">
+                <div class="flex items-center gap-1.5">
+                    <span class="font-extrabold text-base tracking-tight text-win-dark">SmartBin</span>
+                    <span class="hidden sm:inline-flex text-[10px] font-bold px-1.5 py-0.5 rounded bg-win-green-light text-win-green border border-emerald-200 whitespace-nowrap">UIN Bandung</span>
                 </div>
             </a>
 
@@ -89,20 +86,15 @@
             </nav>
 
             <!-- RIGHT ACTION -->
-            <div class="flex items-center gap-2.5">
-                <button id="btn-pwa-install" onclick="installPWA()" class="hidden text-xs font-bold bg-win-green text-white hover:bg-win-green-dark px-3 py-1.5 rounded-lg transition items-center gap-1.5 shadow-sm">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                    <span>Pasang App</span>
-                </button>
-
+            <div class="flex items-center gap-2">
                 @auth
                     @if(Auth::user()->isAdmin())
-                        <a href="{{ route('dashboard') }}" class="text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow-sm" title="Panel Administrator UIN">
+                        <a href="{{ route('dashboard') }}" class="text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow-sm shrink-0" title="Panel Administrator UIN">
                             <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                             <span>Panel Admin</span>
                         </a>
                     @endif
-                    <a href="{{ route('user.portal') }}" class="text-xs font-bold text-win-green bg-win-green-light hover:bg-emerald-100 px-3 py-1.5 rounded-lg transition flex items-center gap-1.5">
+                    <a href="{{ route('user.portal') }}" class="text-xs font-bold text-win-green bg-win-green-light hover:bg-emerald-100 px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 shrink-0">
                         <svg class="w-3.5 h-3.5 text-win-green shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <circle cx="12" cy="12" r="9" stroke-width="2"/>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7v10m-3-7h6"/>
@@ -111,9 +103,9 @@
                         <span class="hidden sm:inline font-medium text-win-slate">• Dashboard</span>
                     </a>
                 @else
-                    <!-- Direct Admin Login Icon Button -->
+                    <!-- Direct Admin Login Button -->
                     <a href="{{ route('login') }}" 
-                       class="text-xs font-bold text-slate-700 hover:text-win-green hover:bg-slate-50 border border-slate-200 px-2.5 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow-sm"
+                       class="text-xs font-bold text-slate-700 hover:text-win-green hover:bg-slate-50 border border-slate-200 px-2.5 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow-sm shrink-0"
                        title="Masuk Langsung sebagai Administrator">
                         <svg class="w-3.5 h-3.5 text-win-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
@@ -121,16 +113,16 @@
                         <span>Admin</span>
                     </a>
 
-                    <a href="{{ route('login') }}" class="text-xs font-semibold text-win-slate hover:text-win-dark px-2 py-1.5 transition">
+                    <a href="{{ route('login') }}" class="hidden sm:inline-block text-xs font-semibold text-win-slate hover:text-win-dark px-2.5 py-1.5 transition">
                         Masuk
                     </a>
-                    <a href="{{ route('register') }}" class="bg-win-green hover:bg-win-green-dark text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm transition">
+                    <a href="{{ route('register') }}" class="hidden sm:inline-block bg-win-green hover:bg-win-green-dark text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm transition">
                         Daftar
                     </a>
                 @endauth
 
                 <!-- Mobile Toggle -->
-                <button onclick="toggleNav()" class="md:hidden p-1.5 text-win-slate hover:text-win-dark">
+                <button onclick="toggleNav()" class="md:hidden p-2 rounded-lg text-slate-600 hover:text-win-dark hover:bg-slate-100 transition" aria-label="Menu">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>
@@ -141,10 +133,20 @@
 
         <!-- MOBILE MENU -->
         <div id="nav-mobile" class="hidden md:hidden border-t border-slate-100 bg-white px-4 py-3 space-y-2 text-xs font-semibold">
-            <a href="{{ route('home') }}" class="block py-1.5 text-win-dark">Beranda</a>
+            <a href="{{ route('home') }}" class="block py-1.5 text-win-dark hover:text-win-green">Beranda</a>
             <a href="{{ route('public.locations') }}" class="block py-1.5 text-win-green font-bold">Peta Lokasi Smart Bin</a>
-            <a href="{{ route('public.education') }}" class="block py-1.5 text-win-dark">Panduan Pemilahan</a>
-            <a href="{{ route('public.monitor') }}" class="block py-1.5 text-slate-500">Live IoT Monitor</a>
+            <a href="{{ route('public.education') }}" class="block py-1.5 text-win-dark hover:text-win-green">Panduan Pemilahan</a>
+            <a href="{{ route('public.monitor') }}" class="block py-1.5 text-slate-500 hover:text-win-green">Live IoT Monitor</a>
+
+            <div id="pwa-mobile-install-container" class="hidden pt-1">
+                <button onclick="installPWA()" class="w-full text-left py-2 px-3 rounded-lg bg-win-green-light border border-emerald-200 text-win-green font-bold text-xs flex items-center justify-between">
+                    <span class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-win-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                        <span>Pasang Aplikasi SmartBin (PWA)</span>
+                    </span>
+                    <span class="text-[10px] bg-win-green text-white px-1.5 py-0.5 rounded">Pasang</span>
+                </button>
+            </div>
             
             <div class="pt-2 border-t border-slate-100 flex items-center gap-2">
                 @auth
@@ -156,11 +158,8 @@
                     @endif
                     <a href="{{ route('user.portal') }}" class="flex-1 text-center py-2 rounded-lg bg-win-green text-white font-bold text-xs">Portal Civitas</a>
                 @else
-                    <a href="{{ route('login') }}?as=admin" class="flex-1 text-center py-2 rounded-lg border border-slate-200 text-slate-700 font-bold text-xs flex items-center justify-center gap-1.5">
-                        <svg class="w-3.5 h-3.5 text-win-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                        <span>Login Admin</span>
-                    </a>
-                    <a href="{{ route('login') }}" class="flex-1 text-center py-2 rounded-lg bg-win-green text-white font-bold text-xs">Masuk Civitas</a>
+                    <a href="{{ route('login') }}" class="flex-1 text-center py-2 rounded-lg border border-slate-200 text-slate-700 font-bold text-xs">Masuk Civitas</a>
+                    <a href="{{ route('register') }}" class="flex-1 text-center py-2 rounded-lg bg-win-green text-white font-bold text-xs">Daftar Akun</a>
                 @endauth
             </div>
         </div>
@@ -209,8 +208,8 @@
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            const btn = document.getElementById('btn-pwa-install');
-            if (btn) btn.classList.remove('hidden');
+            const container = document.getElementById('pwa-mobile-install-container');
+            if (container) container.classList.remove('hidden');
         });
 
         function installPWA() {
@@ -218,8 +217,8 @@
                 deferredPrompt.prompt();
                 deferredPrompt.userChoice.then(() => {
                     deferredPrompt = null;
-                    const btn = document.getElementById('btn-pwa-install');
-                    if (btn) btn.classList.add('hidden');
+                    const container = document.getElementById('pwa-mobile-install-container');
+                    if (container) container.classList.add('hidden');
                 });
             }
         }
