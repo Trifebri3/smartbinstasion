@@ -36,7 +36,7 @@ class User extends Authenticatable
      */
     public function isAdmin(): bool
     {
-        return $this->role === 'admin';
+        return ($this->role ?? null) === 'admin';
     }
 
     /**
@@ -46,9 +46,13 @@ class User extends Authenticatable
     {
         if (empty($this->qr_code_token)) {
             $this->qr_code_token = 'SB-USR-' . strtoupper(Str::random(12));
-            $this->save();
+            try {
+                $this->save();
+            } catch (\Throwable $e) {
+                // Ignore if database column is missing or in read-only state
+            }
         }
-        return $this->qr_code_token;
+        return $this->qr_code_token ?? 'SB-USR-DEFAULT';
     }
 
     /**

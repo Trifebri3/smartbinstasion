@@ -64,12 +64,13 @@
 
             <!-- LOGO: Minimal & Sleek -->
             <a href="{{ route('home') }}" class="flex items-center gap-2.5 group">
-                <div class="w-8 h-8 rounded-xl bg-win-green flex items-center justify-center text-white font-bold text-xs tracking-wider shadow-sm group-hover:scale-105 transition">
-                    UIN
-                </div>
-                <div class="flex items-center gap-1.5">
-                    <span class="font-extrabold text-base tracking-tight text-win-dark">SmartBin</span>
-                    <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-win-green-light text-win-green">UIN Bandung</span>
+                <img src="{{ asset('logo.png') }}" alt="Logo UIN Sunan Gunung Djati Bandung" class="w-9 h-9 object-contain group-hover:scale-105 transition">
+                <div class="flex flex-col">
+                    <div class="flex items-center gap-1.5">
+                        <span class="font-extrabold text-base tracking-tight text-win-dark">SmartBin</span>
+                        <span class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-win-green-light text-win-green border border-emerald-200">UIN Bandung</span>
+                    </div>
+                    <span class="text-[10px] text-win-slate font-medium hidden sm:inline leading-none">UIN Sunan Gunung Djati</span>
                 </div>
             </a>
 
@@ -173,10 +174,12 @@
     <!-- MINIMAL FOOTER -->
     <footer class="border-t border-slate-100 py-8 text-xs text-slate-500">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-win-green"></span>
-                <span class="font-bold text-win-dark">SmartBin UIN Bandung</span>
-                <span>• Inovasi Pengelolaan Sampah Cerdas Kampus UIN Sunan Gunung Djati Bandung</span>
+            <div class="flex items-center gap-2.5">
+                <img src="{{ asset('logo.png') }}" alt="Logo UIN SGD" class="w-6 h-6 object-contain">
+                <div>
+                    <span class="font-bold text-win-dark">SmartBin UIN Bandung</span>
+                    <span class="text-slate-400">• Inovasi Pengelolaan Sampah Cerdas Kampus UIN Sunan Gunung Djati Bandung</span>
+                </div>
             </div>
             <div class="flex items-center gap-4 text-[11px]">
                 <a href="{{ route('public.locations') }}" class="hover:text-win-green">Peta</a>

@@ -54,10 +54,37 @@ Route::post('/sensors/update', function (Request $request) {
         'sensor2' => 'nullable|numeric',
         'sensor3' => 'nullable|numeric',
         'sensor4' => 'nullable|numeric',
+        'station_code' => 'nullable|string',
     ]);
     
     // Simpan data di Cache selama 10 menit untuk realtime dashboard
     Cache::put('sensor_data', $data, now()->addMinutes(10));
+
+    // Sinkronisasi Real-Time ke Database SmartBin
+    try {
+        $stCode = $data['station_code'] ?? 'STATION-01';
+        $bin = \App\Models\SmartBin::where('station_code', $stCode)->first() ?: \App\Models\SmartBin::first();
+        if ($bin) {
+            $hasOrganic = \Illuminate\Support\Facades\Schema::hasColumn('smart_bins', 'capacity_organic');
+            if ($hasOrganic) {
+                if (isset($data['sensor1'])) $bin->capacity_organic = (float)$data['sensor1'];
+                if (isset($data['sensor2'])) $bin->capacity_plastic = (float)$data['sensor2'];
+                if (isset($data['sensor3'])) $bin->capacity_paper = (float)$data['sensor3'];
+                if (isset($data['sensor4'])) $bin->capacity_metal = (float)$data['sensor4'];
+            }
+            if (\Illuminate\Support\Facades\Schema::hasColumn('smart_bins', 'capacity_organik')) {
+                if (isset($data['sensor1'])) $bin->capacity_organik = (float)$data['sensor1'];
+                if (isset($data['sensor2'])) $bin->capacity_plastik = (float)$data['sensor2'];
+                if (isset($data['sensor3'])) $bin->capacity_kertas = (float)$data['sensor3'];
+                if (isset($data['sensor4'])) $bin->capacity_logam = (float)$data['sensor4'];
+            }
+            $bin->last_ping_at = now();
+            $bin->is_online = true;
+            $bin->save();
+        }
+    } catch (\Throwable $e) {
+        \Illuminate\Support\Facades\Log::warning("Realtime DB update error from sensor: " . $e->getMessage());
+    }
     
     // Logika Simpan Riwayat ke DB (Maksimal per 10 menit)
     $lastLog = SensorLog::latest()->first();
@@ -115,6 +142,7 @@ Route::get('/captures/recent', [\App\Http\Controllers\Api\CaptureApiController::
 
 // Endpoint untuk layar publik real-time update
 Route::get('/public/summary', [\App\Http\Controllers\PublicMonitorController::class, 'getSummary']);
+Route::get('/stations/realtime', [\App\Http\Controllers\PublicLandingController::class, 'getRealtimeStationData']);
 
 // ============================================================================
 // API SMARTBIN RASPBERRY PI STATION & USER GAMIFICATION

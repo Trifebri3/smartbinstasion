@@ -59,6 +59,15 @@ class PublicLandingController extends Controller
         // 4. Stasiun Unggulan
         $featuredStations = $smartBins->take(4);
 
+        // 5. Stasiun Hero Utama Real-Time dari Database (STATION-01 Rektorat Utama)
+        $heroStation = $smartBins->where('station_code', 'STATION-01')->first() ?: $smartBins->first();
+        $heroStatus = $heroStation ? $heroStation->getPublicStatus() : [
+            'label' => 'Siap Digunakan',
+            'bg' => 'bg-emerald-50 text-emerald-700 border border-emerald-200',
+            'color' => '#10B981',
+            'status' => 'active'
+        ];
+
         return view('public.landing', compact(
             'smartBins',
             'totalBins',
@@ -67,8 +76,59 @@ class PublicLandingController extends Controller
             'totalPoints',
             'totalCo2Reduced',
             'educationCategories',
-            'featuredStations'
+            'featuredStations',
+            'heroStation',
+            'heroStatus'
         ));
+    }
+
+    /**
+     * Endpoint API JSON untuk data real-time stasiun langsung dari database.
+     */
+    public function getRealtimeStationData(Request $request)
+    {
+        $smartBins = $this->getSafeSmartBins();
+        $code = $request->query('code', 'STATION-01');
+        $bin = $smartBins->where('station_code', $code)->first() ?: $smartBins->first();
+        $statusInfo = $bin ? $bin->getPublicStatus() : [
+            'label' => 'Siap Digunakan',
+            'bg' => 'bg-emerald-50 text-emerald-700 border border-emerald-200',
+            'color' => '#10B981',
+            'status' => 'active'
+        ];
+
+        return response()->json([
+            'status' => 'success',
+            'timestamp' => now()->toIso8601String(),
+            'primary' => [
+                'id' => $bin->id ?? 1,
+                'station_code' => $bin->station_code ?? 'STATION-01',
+                'name' => $bin->name ?? 'SmartBin Rektorat Utama',
+                'location_name' => $bin->location_name ?? 'Lobby Gedung Rektorat Kampus 1 UIN Bandung',
+                'status_label' => $statusInfo['label'],
+                'status_color' => $statusInfo['color'],
+                'status_bg' => $statusInfo['bg'],
+                'is_online' => (bool)($bin->is_online ?? true),
+                'organik' => (int)($bin->capacity_organik ?? 0),
+                'plastik' => (int)($bin->capacity_plastik ?? 0),
+                'kertas'  => (int)($bin->capacity_kertas ?? 0),
+                'logam'   => (int)($bin->capacity_logam ?? 0),
+                'avg_capacity' => round(((float)$bin->capacity_organik + (float)$bin->capacity_plastik + (float)$bin->capacity_kertas + (float)$bin->capacity_logam) / 4),
+                'last_updated' => now()->format('H:i:s'),
+            ],
+            'stations' => $smartBins->map(function ($b) {
+                return [
+                    'id' => $b->id,
+                    'station_code' => $b->station_code,
+                    'name' => $b->name,
+                    'organik' => (int)$b->capacity_organik,
+                    'plastik' => (int)$b->capacity_plastik,
+                    'kertas'  => (int)$b->capacity_kertas,
+                    'logam'   => (int)$b->capacity_logam,
+                    'avg_capacity' => round(((float)$b->capacity_organik + (float)$b->capacity_plastik + (float)$b->capacity_kertas + (float)$b->capacity_logam) / 4),
+                ];
+            })
+        ]);
     }
 
     /**

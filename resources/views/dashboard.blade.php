@@ -25,9 +25,7 @@
             <!-- ============================================================== -->
             <div class="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div class="flex items-center gap-3.5">
-                    <div class="w-12 h-12 rounded-2xl bg-win-green flex items-center justify-center text-white font-black text-sm tracking-wider shadow-sm shrink-0">
-                        UIN
-                    </div>
+                    <img src="{{ asset('logo.png') }}" alt="Logo UIN SGD" class="w-12 h-12 object-contain shrink-0">
                     <div>
                         <div class="flex items-center gap-2 flex-wrap">
                             <h3 class="text-base font-extrabold text-win-dark">{{ Auth::user()?->name ?? 'Administrator UIN Bandung' }}</h3>
@@ -62,7 +60,7 @@
             <!-- ============================================================== -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <!-- 1. Menu Statistik -->
-                <a href="{{ route('admin.statistics') }}" class="group bg-white border border-slate-200/80 hover:border-win-green rounded-2xl p-4 shadow-sm hover:shadow-md transition flex items-center justify-between">
+                <a href="{{ Route::has('admin.statistics') ? route('admin.statistics') : url('/admin/statistics') }}" class="group bg-white border border-slate-200/80 hover:border-win-green rounded-2xl p-4 shadow-sm hover:shadow-md transition flex items-center justify-between">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 group-hover:bg-win-green group-hover:text-white transition flex items-center justify-center shrink-0">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
@@ -76,7 +74,7 @@
                 </a>
 
                 <!-- 2. Menu Kondisi Perangkat -->
-                <a href="{{ route('admin.devices') }}" class="group bg-white border border-slate-200/80 hover:border-win-green rounded-2xl p-4 shadow-sm hover:shadow-md transition flex items-center justify-between">
+                <a href="{{ Route::has('admin.devices') ? route('admin.devices') : url('/admin/devices') }}" class="group bg-white border border-slate-200/80 hover:border-win-green rounded-2xl p-4 shadow-sm hover:shadow-md transition flex items-center justify-between">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 group-hover:bg-blue-600 group-hover:text-white transition flex items-center justify-center shrink-0">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
@@ -90,7 +88,7 @@
                 </a>
 
                 <!-- 3. Menu Lokasi -->
-                <a href="{{ route('admin.locations') }}" class="group bg-white border border-slate-200/80 hover:border-win-green rounded-2xl p-4 shadow-sm hover:shadow-md transition flex items-center justify-between">
+                <a href="{{ Route::has('admin.locations') ? route('admin.locations') : url('/admin/locations') }}" class="group bg-white border border-slate-200/80 hover:border-win-green rounded-2xl p-4 shadow-sm hover:shadow-md transition flex items-center justify-between">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 group-hover:bg-amber-600 group-hover:text-white transition flex items-center justify-center shrink-0">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
@@ -104,7 +102,7 @@
                 </a>
 
                 <!-- 4. Menu Kapasitas -->
-                <a href="{{ route('admin.capacity') }}" class="group bg-white border border-slate-200/80 hover:border-win-green rounded-2xl p-4 shadow-sm hover:shadow-md transition flex items-center justify-between">
+                <a href="{{ Route::has('admin.capacity') ? route('admin.capacity') : url('/admin/capacity') }}" class="group bg-white border border-slate-200/80 hover:border-win-green rounded-2xl p-4 shadow-sm hover:shadow-md transition flex items-center justify-between">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-700 group-hover:bg-rose-600 group-hover:text-white transition flex items-center justify-center shrink-0">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
@@ -116,7 +114,6 @@
                     </div>
                     <svg class="w-4 h-4 text-slate-400 group-hover:text-rose-600 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                 </a>
-            </div>
             </div>
             
             <!-- Camera Configuration -->
@@ -548,7 +545,7 @@
             btn.disabled = true;
             btnText.textContent = 'Mengirim...';
 
-            fetch('{{ route("admin.sensors.alert-live") }}', {
+            fetch('{{ Route::has("admin.sensors.alert-live") ? route("admin.sensors.alert-live") : url("/admin/sensors/alert-live") }}', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

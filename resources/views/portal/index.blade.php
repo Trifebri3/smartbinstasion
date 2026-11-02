@@ -58,8 +58,8 @@
     <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 py-3">
         <div class="max-w-2xl mx-auto flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <a href="{{ route('home') }}" class="w-10 h-10 rounded-xl bg-win-green flex items-center justify-center font-black text-white text-xs tracking-wider shadow-sm hover:scale-105 transition">
-                    UIN
+                <a href="{{ route('home') }}" class="hover:scale-105 transition block shrink-0">
+                    <img src="{{ asset('logo.png') }}" alt="Logo UIN" class="w-10 h-10 object-contain">
                 </a>
                 <div>
                     <h1 class="text-sm font-bold text-win-dark tracking-tight">SmartBin UIN Bandung</h1>
@@ -103,9 +103,7 @@
         <!-- PWA Install Banner (Interactive) -->
         <div id="pwa-install-banner" class="hidden bg-win-green-light border border-emerald-200 rounded-2xl p-3.5 shadow-sm flex items-center justify-between gap-3">
             <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-xl bg-win-green text-white flex items-center justify-center font-bold text-xs shrink-0">
-                    UIN
-                </div>
+                <img src="{{ asset('logo.png') }}" alt="Logo UIN" class="w-9 h-9 object-contain shrink-0">
                 <div>
                     <h4 class="text-xs font-bold text-win-dark">Pasang Aplikasi SmartBin UIN</h4>
                     <p class="text-[11px] text-win-slate">Akses instan dari layar HP tanpa browser</p>

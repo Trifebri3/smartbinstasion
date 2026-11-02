@@ -52,9 +52,7 @@
         <!-- Brand Header -->
         <div class="mb-6 text-center space-y-2">
             <a href="{{ route('home') }}" class="inline-flex items-center gap-3 group">
-                <div class="w-12 h-12 rounded-2xl bg-win-green flex items-center justify-center text-white shadow-md shadow-win-green/20 group-hover:scale-105 transition">
-                    <span class="font-black text-sm tracking-wider">UIN</span>
-                </div>
+                <img src="{{ asset('logo.png') }}" alt="Logo UIN Sunan Gunung Djati Bandung" class="w-12 h-12 object-contain group-hover:scale-105 transition">
                 <div class="text-left">
                     <div class="text-lg font-extrabold text-win-dark tracking-tight">SMART BIN</div>
                     <div class="text-[11px] font-bold text-win-green uppercase tracking-wider">UIN Sunan Gunung Djati Bandung</div>

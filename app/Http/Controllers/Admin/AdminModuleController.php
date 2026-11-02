@@ -310,3 +310,4 @@ class AdminModuleController extends Controller
         ]);
     }
 }
+

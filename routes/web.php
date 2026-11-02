@@ -24,6 +24,7 @@ Route::get('/bins/{id}', [PublicLandingController::class, 'binDetail'])->name('p
 Route::get('/monitor', [PublicMonitorController::class, 'index'])->name('public.monitor');
 Route::get('/public-monitor', [PublicMonitorController::class, 'index'])->name('public.monitor.alias');
 Route::get('/api/public-summary', [PublicMonitorController::class, 'getSummary'])->name('api.public-summary');
+Route::get('/api/stations/realtime', [PublicLandingController::class, 'getRealtimeStationData'])->name('api.stations.realtime');
 
 // Autentikasi Google OAuth
 Route::get('/auth/google', [GoogleAuthController::class, 'redirectToGoogle'])->name('auth.google');
@@ -38,7 +39,16 @@ Route::middleware('auth')->group(function () {
 // Dashboard Admin (Full Control: Servo, Rules, Manajemen Stasiun, Email Alert)
 Route::middleware(['auth', EnsureUserIsAdmin::class])->group(function () {
     Route::get('/dashboard', function () {
-        $smartBins = \App\Models\SmartBin::all();
+        try {
+            if (\Illuminate\Support\Facades\Schema::hasTable('smart_bins')) {
+                $smartBins = \App\Models\SmartBin::all();
+            } else {
+                $smartBins = collect();
+            }
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning("Dashboard SmartBin query error: " . $e->getMessage());
+            $smartBins = collect();
+        }
         return view('dashboard', compact('smartBins'));
     })->name('dashboard');
 

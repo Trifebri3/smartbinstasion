@@ -71,7 +71,7 @@
             <footer class="border-t border-slate-200 bg-white py-4 text-xs text-slate-500">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2">
                     <div class="flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-win-green"></span>
+                        <img src="{{ asset('logo.png') }}" alt="Logo UIN" class="w-5 h-5 object-contain">
                         <span class="font-bold text-win-dark">SmartBin Admin Panel</span>
                         <span>• UIN Sunan Gunung Djati Bandung</span>
                     </div>

@@ -21,17 +21,33 @@ class UserPortalController extends Controller
         }
         $user->ensureQrToken();
 
-        // Ambil daftar titik SmartBin
-        $stations = SmartBin::all();
+        $stations = collect();
+        $educations = collect();
+        $deposits = collect();
 
-        // Ambil materi edukasi & ekoteologi
-        $educations = EducationMaterial::all();
+        // Ambil daftar titik SmartBin dengan safe query
+        try {
+            if (\Illuminate\Support\Facades\Schema::hasTable('smart_bins')) {
+                $stations = SmartBin::all();
+            }
+        } catch (\Throwable $e) {}
 
-        // Ambil riwayat setoran user
-        $deposits = WasteDeposit::where('user_id', $user->id)
-            ->latest()
-            ->take(10)
-            ->get();
+        // Ambil materi edukasi & ekoteologi dengan safe query
+        try {
+            if (\Illuminate\Support\Facades\Schema::hasTable('education_materials')) {
+                $educations = EducationMaterial::all();
+            }
+        } catch (\Throwable $e) {}
+
+        // Ambil riwayat setoran user dengan safe query
+        try {
+            if (\Illuminate\Support\Facades\Schema::hasTable('waste_deposits')) {
+                $deposits = WasteDeposit::where('user_id', $user->id)
+                    ->latest()
+                    ->take(10)
+                    ->get();
+            }
+        } catch (\Throwable $e) {}
 
         return view('portal.index', compact('user', 'stations', 'educations', 'deposits'));
     }
